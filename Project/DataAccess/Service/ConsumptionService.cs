@@ -9,14 +9,28 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Service
 {
-    private static IConsumptionDAO c = new ConsumptionDAOImpl();
+    
 
     public class ConsumptionService
     {
-        public List<Consumption> Read()
+        private static readonly IConsumptionDAO consumptionDAO = new ConsumptionDAOImpl();
+
+        public List<Consumption> Read(string reg, DateTime day)
         {
-            return consumptionDAO.
+            return consumptionDAO.Read(reg, day);
         }
 
+        public bool Write(List<Consumption> newDate)
+        {
+            if (consumptionDAO.Write(newDate))
+                return true;
+            else
+                return false;
+        }
+        
+        public void SaveError(string msg)
+        {
+            consumptionDAO.SaveError(msg);
+        }
     }
 }

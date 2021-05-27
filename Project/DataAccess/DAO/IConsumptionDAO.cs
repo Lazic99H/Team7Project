@@ -12,5 +12,7 @@ namespace DataAccess.DAO
         List<Consumption> Read(string reg, DateTime day);
 
         bool Write(List<Consumption> newData);
+
+        void SaveError(string message);
     }
 }
