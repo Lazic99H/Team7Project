@@ -9,7 +9,7 @@ namespace DataAccess.DAO
 {
     public interface IConsumptionDAO
     {
-        Dictionary<DateTime, Consumption> Read(string reg, List<DateTime> days);
+        Dictionary<DateTime, List<Consumption>> Read(string reg, List<DateTime> days);
 
         List<Consumption> Read(string reg, DateTime day);
 
