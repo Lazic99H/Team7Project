@@ -69,5 +69,19 @@ namespace UserInterface
             }
             //else{} pozove funkciju iz FileWriter.... i obrise to iz csvFileName
         }
+
+        private void Button_Click_Find(object sender, RoutedEventArgs e)
+        {
+            if(startDate == null || startDate.Text.Equals(""))
+            {
+                System.Windows.Forms.MessageBox.Show("Sva polja moraju biti ispravno popunjena", "Greska", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }else if (endDate == null || endDate.Text.Equals(""))
+            {
+                System.Windows.Forms.MessageBox.Show("Sva polja moraju biti ispravno popunjena", "Greska", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }else if (idText.Text.Trim().Equals(""))
+            {
+                System.Windows.Forms.MessageBox.Show("Sva polja moraju biti popunjena", "Greska", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
     }
 }

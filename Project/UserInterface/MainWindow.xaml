@@ -8,14 +8,14 @@
       Title="MainWindow" Height="470" Width="835">
     <Canvas Margin="0,0,0,-5">
         <Label HorizontalAlignment="Left" VerticalAlignment="Top" Width="249" Height="230" BorderBrush="Gray" BorderThickness="1" Canvas.Left="-359" Canvas.Top="10"/>
-        <Label  Content="From" FontWeight="Light" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Canvas.Left="39" Canvas.Top="46"/>
-        <DatePicker Height="25" HorizontalAlignment="Left" Name="startDate"   VerticalAlignment="Top" Width="145" Canvas.Left="112" Canvas.Top="46" />
+        <Label  Name="labelFrom" Content="From" FontWeight="Light" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Canvas.Left="39" Canvas.Top="46"/>
+        <DatePicker Height="25" HorizontalAlignment="Left" Name="startDate"   VerticalAlignment="Top" Width="145" Canvas.Left="112" Canvas.Top="46"  />
         <Label  FontWeight="Black"  HorizontalAlignment="Left" VerticalAlignment="Top"  Height="25" Width="145" Margin="80,65,0,0"/>
         <!--Ovo sam samo za eror ostavio nepotrebno -->
         <Label Content="To" FontWeight="Light" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Canvas.Left="39" Canvas.Top="95"/>
         <DatePicker Height="25" HorizontalAlignment="Left" Name="endDate"   VerticalAlignment="Top" Width="145" Canvas.Left="112" Canvas.Top="95" />
         <Label Content="ID" FontWeight="Light" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Canvas.Left="39" Canvas.Top="146"/>
-        <TextBox FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="145" Canvas.Left="112" Canvas.Top="146"/>
+        <TextBox Name="idText" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="145" Canvas.Left="112" Canvas.Top="146"/>
         <Button Content="Find" Width="185" Height="35" HorizontalAlignment="left" VerticalAlignment="Top" Canvas.Left="60" Canvas.Top="191" Click="Button_Click_Find"/>
 
         <Label HorizontalAlignment="Left" VerticalAlignment="Top" Width="250" Height="170" BorderBrush="Gray" BorderThickness="1" Canvas.Top="245" Canvas.Left="-359"/>
