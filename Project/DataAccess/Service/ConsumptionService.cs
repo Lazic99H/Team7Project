@@ -9,18 +9,16 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Service
 {
-    
-
     public class ConsumptionService
     {
         private static readonly IConsumptionDAO consumptionDAO = new ConsumptionDAOImpl();
-
-        public List<Consumption> Read(string reg, DateTime day)
+        //private static readonly ConsumptionService consumptionService = new ConsumptionService();
+        public Dictionary<DateTime, List<Consumption>> Read(string reg, List<DateTime> days)//vraca null ako nema trazenih potrosnjih za odabrani opseg ili dictinary ako ima..
         {
-            return consumptionDAO.Read(reg, day);
+            return consumptionDAO.Read(reg, days);
         }
 
-        public bool Write(List<Consumption> newDate)
+        public bool Write(List<Consumption> newDate)//vraca true ako je upisano dobro ili false ako nije
         {
             if (consumptionDAO.Write(newDate))
                 return true;
@@ -28,7 +26,7 @@ namespace DataAccess.Service
                 return false;
         }
         
-        public void SaveError(string msg)
+        public void SaveError(string msg)//zapis u audit tabelu
         {
             consumptionDAO.SaveError(msg);
         }
