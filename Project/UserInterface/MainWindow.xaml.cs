@@ -73,25 +73,26 @@ namespace UserInterface
 
         private void Button_Click_Find(object sender, RoutedEventArgs e)
         {
-            if(startDate == null || startDate.Text.Equals(""))
-            {
-                System.Windows.Forms.MessageBox.Show("Sva polja moraju biti ispravno popunjena", "Greska", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }else if (endDate == null || endDate.Text.Equals(""))
+            if(endDate.Text.Equals("") || startDate.Text.Equals(""))
             {
                 System.Windows.Forms.MessageBox.Show("Sva polja moraju biti ispravno popunjena", "Greska", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }else if (idText.Text.Trim().Equals(""))
             {
                 System.Windows.Forms.MessageBox.Show("Sva polja moraju biti popunjena", "Greska", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
-            string to = startDate.Text;
-            string end = endDate.Text;
-            string[] tos = to.Split('.');
-            string[] ends = end.Split('.');
-            if (int.Parse(tos[0]) >= int.Parse(ends[0]))
+            else
             {
-                System.Windows.Forms.MessageBox.Show("Pocetni datum mora biti manji od krajnjeg datuma", "Greska", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                string to = startDate.Text;
+                string end = endDate.Text;
+                string[] tos = to.Split('.');
+                string[] ends = end.Split('.');
+                if (int.Parse(tos[0]) >= int.Parse(ends[0]))
+                {
+                    System.Windows.Forms.MessageBox.Show("Pocetni datum mora biti manji od krajnjeg datuma", "Greska", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
+
+            
         }
     }
 }
