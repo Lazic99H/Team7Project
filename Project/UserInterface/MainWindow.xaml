@@ -22,8 +22,8 @@
         <Label Content="Chose a file" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="25" Canvas.Left="39" Canvas.Top="270"/>
         <Button Content="Browser" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Click="Button_Click_Browser" Canvas.Left="132" Canvas.Top="270"/>
         <Label Content="Chosen file" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="25" Canvas.Left="39" Canvas.Top="320"/>
-        <TextBox IsReadOnly="True" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Canvas.Left="132" Canvas.Top="320"/>
-        <Button Content="Load" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" Height="35" Canvas.Left="60" Canvas.Top="363"/>
+        <TextBox x:Name="csvFileName" IsReadOnly="True" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Canvas.Left="132" Canvas.Top="320"/>
+        <Button Content="Load" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" Height="35" Canvas.Left="60" Canvas.Top="363" Click="Button_Click_Load"/>
 
         <DataGrid Width="540" HorizontalAlignment="Right" VerticalAlignment="Top" Height="400" Canvas.Left="272" Canvas.Top="10"/>
     </Canvas>

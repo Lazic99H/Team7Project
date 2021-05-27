@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,11 +36,12 @@ namespace UserInterface
 
                 if (filterFiles.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    //string lokacijaSlike = filterFiles.FileName; ovo file name daje putanju ja msm tj trebalo bi
-                    //string rez = new DirectoryInfo(filterFiles.FileName).Parent.Name;
+                    string lokacijaSlike = filterFiles.FileName;// ovdje je kompletna putanja C//users//programs//Faks//prog_2018_02_03.csv npr
+                    string fileName = new DirectoryInfo(filterFiles.FileName).Name;//ovo je prog_2018_02_03.csv brutalno
+                    csvFileName.Text = fileName;
                     //rez += "/";
                     //rez += new DirectoryInfo(filterFiles.FileName).Name;
-
+                    string s = " ";
                     //BitmapImage pom = new BitmapImage();
                     //pom.BeginInit();
                     //pom.UriSource = new Uri(rez, UriKind.Relative);
@@ -57,6 +59,16 @@ namespace UserInterface
             {
                 System.Windows.Forms.MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void Button_Click_Load(object sender, RoutedEventArgs e)
+        {
+            if(csvFileName.Text == "")
+            {
+                System.Windows.Forms.MessageBox.Show("Chose a file!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+            //else{} pozove funkciju iz FileWriter.... i obrise to iz csvFileName
         }
     }
 }
