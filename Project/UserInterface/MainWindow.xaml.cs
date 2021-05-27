@@ -39,12 +39,11 @@ namespace UserInterface
                     string lokacijaSlike = filterFiles.FileName;// ovdje je kompletna putanja C//users//programs//Faks//prog_2018_02_03.csv npr
                     string fileName = new DirectoryInfo(filterFiles.FileName).Name;//ovo je prog_2018_02_03.csv brutalno
                     csvFileName.Text = fileName;
-                    //rez += "/";
-                    //rez += new DirectoryInfo(filterFiles.FileName).Name;
-                    string s = " ";
+                    //fileName += "/";
+                    //fileName += new DirectoryInfo(filterFiles.FileName).Name;
                     //BitmapImage pom = new BitmapImage();
                     //pom.BeginInit();
-                    //pom.UriSource = new Uri(rez, UriKind.Relative);
+                    //pom.UriSource = new Uri(fileName, UriKind.Relative);
                     //pom.EndInit();
 
                     //slicica.Stretch = Stretch.Fill;
