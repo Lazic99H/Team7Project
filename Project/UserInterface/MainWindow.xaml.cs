@@ -1,5 +1,8 @@
-﻿using System;
+﻿using DataAccess.Model;
+using FileWriter;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,10 +25,20 @@ namespace UserInterface
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static BindingList<Consumption> consumptions
+        {
+            get; set;
+        }
+
+        public static Program writeFunk = new Program();
+
+
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        string fileLoaction = "";
 
         private void Button_Click_Browser(object sender, RoutedEventArgs e)
         {
@@ -36,22 +49,9 @@ namespace UserInterface
 
                 if (filterFiles.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    string lokacijaSlike = filterFiles.FileName;// ovdje je kompletna putanja C//users//programs//Faks//prog_2018_02_03.csv npr
+                    fileLoaction = filterFiles.FileName;// ovdje je kompletna putanja C//users//programs//Faks//prog_2018_02_03.csv npr
                     string fileName = new DirectoryInfo(filterFiles.FileName).Name;//ovo je prog_2018_02_03.csv brutalno
                     csvFileName.Text = fileName;
-                    //bool validacija = Validation.ValidateFileName(fileName);
-                    //fileName += "/";
-                    //fileName += new DirectoryInfo(filterFiles.FileName).Name;
-                    //BitmapImage pom = new BitmapImage();
-                    //pom.BeginInit();
-                    //pom.UriSource = new Uri(fileName, UriKind.Relative);
-                    //pom.EndInit();
-
-                    //slicica.Stretch = Stretch.Fill;
-
-                    //slicica.Source = pom;
-                    //// textBoxIme.Text = slicica.Source.ToString();
-
                 }
 
             }
@@ -68,7 +68,18 @@ namespace UserInterface
                 System.Windows.Forms.MessageBox.Show("Chose a file!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
-            //else{} pozove funkciju iz FileWriter.... i obrise to iz csvFileName
+            else{
+                string temp = csvFileName.Text;
+                string[] date = temp.Split('_', '.');
+
+                string day = $"{date[1]}/{date[2]}/{date[3]}";
+
+                DateTime time = DateTime.Parse(day);
+                writeFunk.Write(fileLoaction,time);
+
+                csvFileName.Text = "";
+                fileLoaction = "";
+            }// pozove funkciju iz FileWriter.... i obrise to iz csvFileName
         }
 
         private void Button_Click_Find(object sender, RoutedEventArgs e)

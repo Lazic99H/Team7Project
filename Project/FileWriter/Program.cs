@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataAccess.Model;
+using DataAccess.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +8,32 @@ using System.Threading.Tasks;
 
 namespace FileWriter
 {
-    class Program
+    public class Program
     {
+        private static readonly ConsumptionService consumptionService = new ConsumptionService();
+        private static ExtractData extract = new ExtractData();
+
+        public string Write(string path,DateTime time)
+        {
+            string ret = "good";
+            List<Consumption> newDate = extract.ReadFile(path, time);
+
+            if (newDate != null)
+            {
+                if (!consumptionService.Write(newDate))
+                    ret = "dateExists";
+            }
+            else
+            {
+                ret = "fileFormat";
+            }
+
+            return ret;
+        }
+
         static void Main(string[] args)
         {
         }
+
     }
 }

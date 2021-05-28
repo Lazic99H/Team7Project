@@ -96,5 +96,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <Project>{DCAF0E1D-84E8-40D1-9E51-5942092318E3}</Project>
+      <Name>DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileWriter\FileWriter.csproj">
+      <Project>{ABA3B1AC-DBD5-4839-9394-0C61E41844B8}</Project>
+      <Name>FileWriter</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
