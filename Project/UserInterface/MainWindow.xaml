@@ -7,6 +7,38 @@
         mc:Ignorable="d"
       Title="MainWindow" Height="470" Width="835">
     <Canvas Margin="0,0,0,-5">
+
+        <Canvas.Resources>
+            <DataTemplate x:Key="Hour"  >
+                    <StackPanel Width="100" Height="20">
+                        <TextBlock x:Name="hour" Text="{Binding Hour}"/>
+                    </StackPanel>
+                </DataTemplate>
+
+                <DataTemplate x:Key="Load">
+                    <StackPanel Width="100" Height="20">
+                        <TextBlock x:Name="load" Text="{Binding Load}"/>
+                    </StackPanel>
+                </DataTemplate>
+
+                <DataTemplate x:Key="Day">
+                    <StackPanel Width="100" Height="20">
+                    <TextBlock x:Name="day" Text="{Binding Day, StringFormat={}{0:MM-dd-yyyy}}">
+
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+
+                <DataTemplate x:Key="Region">
+                    <StackPanel Width="350" Height="100">
+                        <TextBlock x:Name="region" Text="{Binding Region}"/>
+                    </StackPanel>
+                </DataTemplate>
+            
+
+        </Canvas.Resources>
+        
+        
         <Label HorizontalAlignment="Left" VerticalAlignment="Top" Width="249" Height="230" BorderBrush="Gray" BorderThickness="1" Canvas.Left="-359" Canvas.Top="10"/>
         <Label  Name="labelFrom" Content="From" FontWeight="Light" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Canvas.Left="39" Canvas.Top="46"/>
         <DatePicker Height="25" HorizontalAlignment="Left" Name="startDate"   VerticalAlignment="Top" Width="145" Canvas.Left="112" Canvas.Top="46"  />
@@ -25,6 +57,13 @@
         <TextBox x:Name="csvFileName" IsReadOnly="True" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Canvas.Left="132" Canvas.Top="320"/>
         <Button Content="Load" HorizontalAlignment="Left" VerticalAlignment="Top" Width="185" Height="35" Canvas.Left="60" Canvas.Top="363" Click="Button_Click_Load"/>
 
-        <DataGrid Width="540" HorizontalAlignment="Right" VerticalAlignment="Top" Height="400" Canvas.Left="272" Canvas.Top="10"/>
+        <DataGrid Width="540" HorizontalAlignment="Right" ItemsSource="{Binding consumptions}" VerticalAlignment="Top" Height="400" Canvas.Left="272" Canvas.Top="10">
+            <DataGrid.Columns >
+                <DataGridTemplateColumn  Header="Hour"   CellTemplate="{StaticResource Hour}"  />
+                <DataGridTemplateColumn Header="Consumption"   CellTemplate="{StaticResource Load}"  />
+                <DataGridTemplateColumn Header="Region"   CellTemplate="{StaticResource Region}" />
+                <DataGridTemplateColumn Header="Date"   CellTemplate="{StaticResource Day}" />
+            </DataGrid.Columns>
+            </DataGrid>
     </Canvas>
 </Window>

@@ -9,6 +9,8 @@ namespace DataAccess.DAO
 {
     public interface IConsumptionDAO
     {
+        Dictionary<DateTime, List<Consumption>> Read(string reg, List<DateTime> days);
+
         List<Consumption> Read(string reg, DateTime day);
 
         bool Write(List<Consumption> newData);

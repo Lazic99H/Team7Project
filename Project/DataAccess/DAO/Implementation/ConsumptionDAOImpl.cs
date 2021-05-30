@@ -45,6 +45,29 @@ namespace DataAccess.DAO.Implementation
             return searchedItems;
         }
 
+        public Dictionary<DateTime, List<Consumption>> Read(string reg, List<DateTime> days)
+        {
+            Dictionary<DateTime, List<Consumption>> wantedData = new Dictionary<DateTime, List<Consumption>>();
+
+            foreach(var day in days)
+            {
+                List<Consumption> oneDayConsumption = new List<Consumption>();
+                oneDayConsumption = Read(reg, day);
+
+                if(oneDayConsumption.Count != 24)//ako je razlicito oda 24 cao papi
+                {
+                    wantedData = null;
+                    return wantedData;
+                }
+                else
+                {
+                    wantedData.Add(day, oneDayConsumption);
+                }
+
+            }
+            return wantedData;
+        }
+
         public void SaveError(string message)
         {
             string query = "insert into audittable (greska,datum) values(:greska,:datum);";
