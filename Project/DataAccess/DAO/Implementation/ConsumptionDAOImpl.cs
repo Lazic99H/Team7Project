@@ -58,10 +58,11 @@ namespace DataAccess.DAO.Implementation
                 List<Consumption> oneDayConsumption = new List<Consumption>();
                 oneDayConsumption = Read(reg, day);
 
-                if(oneDayConsumption.Count != 24)//ako je razlicito oda 24 cao papi
+                if(oneDayConsumption == null)//ako je razlicito oda 24 cao papi
                 {
-                    wantedData = null;
-                    return wantedData;
+                    //wantedData = null;
+                    //return wantedData;
+                //    wantedData.Add(day, null);
                 }
                 else
                 {
