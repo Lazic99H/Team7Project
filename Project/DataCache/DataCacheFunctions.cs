@@ -42,7 +42,7 @@ namespace DataCache
             int n = int.Parse(dates2[0]) - int.Parse(dates1[0]);
             for (int i = 0; i < n; i++)
             {
-                consumptions.Add(DataAccess.Service.ConsumptionService.Read(geoArea, dateTime.AddDays(i)));
+                //consumptions.Add(DataAccess.Service.ConsumptionService.Read(geoArea, dateTime.AddDays(i)));
             }
 
             return consumptions;

@@ -4,8 +4,9 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Oracle.DataAccess.Client;
-//using Oracle.ManageDataAccess.Client; ovaj nece
+//using Oracle.DataAccess.Client;
+//using Oracle.ManageDataAccess.Client; //ovaj nece 
+using Oracle.ManagedDataAccess.Client;
 
 namespace DataAccess.Connection
 {

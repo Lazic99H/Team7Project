@@ -14,21 +14,23 @@ namespace DataAccess.DAO.Implementation
     {
         public List<Consumption> Read(string reg, DateTime day)
         {
-            string query = "select * from databasetable where regija = ':regija' and datum = ':datum'; "; // upit za search
-
+            string query = "select * from databasetable where regija = :regija and datum = :datum"; // upit za search
             List<Consumption> searchedItems = new List<Consumption>();
+
 
             using (IDbConnection connection = ConnectionUtil_Pooling.GetConnection())
             {
+
                 connection.Open();
+
                 using (IDbCommand command = connection.CreateCommand())
                 {
                     command.CommandText = query;
                     ParameterUtil.AddParameter(command, "regija", DbType.String, 20);
-                    ParameterUtil.AddParameter(command, "datum", DbType.Date);
+                    ParameterUtil.AddParameter(command, "datum", DbType.String, 20);
                     command.Prepare();
                     ParameterUtil.SetParameterValue(command, "regija", reg);
-                    ParameterUtil.SetParameterValue(command, "datum", day);//moze biti problem mozda kast u string i onda gore to string
+                    ParameterUtil.SetParameterValue(command, "datum", day.ToString("dd-MMMM-yyyy"));//moze biti problem mozda kast u string i onda gore to string
 
                     using (IDataReader reader = command.ExecuteReader())
                     {
@@ -42,6 +44,8 @@ namespace DataAccess.DAO.Implementation
                 }
             }
             //ovdje iz za upis u audit tabelu
+            if (searchedItems.Count == 0)
+                searchedItems = null;
             return searchedItems;
         }
 
@@ -70,7 +74,7 @@ namespace DataAccess.DAO.Implementation
 
         public void SaveError(string message)
         {
-            string query = "insert into audittable (greska,datum) values(:greska,:datum);";
+            string query = "insert into audittable (greska,datum) values(:greska,:datum)";
             DateTime time = DateTime.Now;
             using (IDbConnection connection = ConnectionUtil_Pooling.GetConnection())
             {
@@ -79,10 +83,10 @@ namespace DataAccess.DAO.Implementation
                 {
                     command.CommandText = query;
                     ParameterUtil.AddParameter(command, "greska", DbType.String, 50);
-                    ParameterUtil.AddParameter(command, "datum", DbType.Date);
+                    ParameterUtil.AddParameter(command, "datum", DbType.String, 20);
                     command.Prepare();
                     ParameterUtil.SetParameterValue(command, "greska", message);
-                    ParameterUtil.SetParameterValue(command, "datum", time);//vjr neso oko ovog ce biti problem
+                    ParameterUtil.SetParameterValue(command, "datum", time.ToString("dd-MMMM-yyyy"));//vjr neso oko ovog ce biti problem
                     command.ExecuteNonQuery();
                 }
             }
@@ -91,55 +95,55 @@ namespace DataAccess.DAO.Implementation
         public bool Write(List<Consumption> newData)
         {
             bool ret = false;
+            if (Read(newData[0].Region, newData[0].Day) != null)
+            {
+                SaveError("Date for that region and date already exist");
+                return ret;
+            }
             using (IDbConnection connection = ConnectionUtil_Pooling.GetConnection())
             {
+                
                 connection.Open();
-                ret = Write(newData, connection);//ako dole foreach ne radi onda ovdje ga pozvati za svaki
+                foreach (var data in newData)
+                {
+                    ret = Write(data, connection);//ako dole foreach ne radi onda ovdje ga pozvati za svaki
+                    if (!ret)
+                        break;
+                }
             }
 
             return ret;
         }
+        
 
-        public bool Write(List<Consumption> newData,IDbConnection connection)
+        public bool Write(Consumption newData, IDbConnection connection)
         {
             bool ret = false;
-            string insert = "insert into databasetable (br,potrosnja,regija,datum)" + "values (:br,:potrosnja,:regija,:datum)"; //inser za datum mozda nije dobar
+            string insert = "insert into databasetable (br,potrosnja,regija,datum) values (:br,:potrosnja,:regija,:datum)"; 
 
             using (IDbCommand command = connection.CreateCommand())
             {
-                if(Read(newData[0].Region,newData[0].Day) != null)
-                {
-                    SaveError("Values for that region and time allready exist");
-                    return ret;
-                }
-                else
-                {
-                    foreach (var consumption in newData)
-                    {
-                        command.CommandText = insert;
+                command.CommandText = insert;
 
-                        ParameterUtil.AddParameter(command, "br", DbType.Int32);
-                        ParameterUtil.AddParameter(command, "potrosnja", DbType.Int32);
-                        ParameterUtil.AddParameter(command, "regija", DbType.String, 20);
-                        ParameterUtil.AddParameter(command, "datum", DbType.Date);//ovo mozda nije dobro
+                ParameterUtil.AddParameter(command, "br", DbType.Int32);
+                ParameterUtil.AddParameter(command, "potrosnja", DbType.Int32);
+                ParameterUtil.AddParameter(command, "regija", DbType.String, 20);
+                ParameterUtil.AddParameter(command, "datum", DbType.String, 20);
 
-                        command.Prepare();
+                command.Prepare();
 
-                        ParameterUtil.SetParameterValue(command, "br", consumption.Day);
-                        ParameterUtil.SetParameterValue(command, "potrosnja", consumption.Load);
-                        ParameterUtil.SetParameterValue(command, "regija", consumption.Region);
-                        ParameterUtil.SetParameterValue(command, "datum", consumption.Region); // ovo mozda nije dobro
-
-                        command.ExecuteNonQuery();
-                    }
-                }
-
+                ParameterUtil.SetParameterValue(command, "br", newData.Hour);
+                ParameterUtil.SetParameterValue(command, "potrosnja", newData.Load);
+                ParameterUtil.SetParameterValue(command, "regija", newData.Region);
+                ParameterUtil.SetParameterValue(command, "datum", newData.Day.ToString("dd-MMMM-yyyy"));
 
                 command.ExecuteNonQuery();
+                ret = true;
             }
 
             return ret;
         }
-   
+
+
     }
 }
