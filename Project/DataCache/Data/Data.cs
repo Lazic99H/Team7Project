@@ -8,6 +8,6 @@ namespace DataCache.Data
 {
     class Data
     {
-        public static Dictionary<Query, List<DataAccess.Model.Consumption>> queries = new Dictionary<Query, List<DataAccess.Model.Consumption>>();
+        public static Dictionary<Query, Dictionary<DateTime, List<DataAccess.Model.Consumption>>> queries = new Dictionary<Query, Dictionary<DateTime, List<DataAccess.Model.Consumption>>>();
     }
 }

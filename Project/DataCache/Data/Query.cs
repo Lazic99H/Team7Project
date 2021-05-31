@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataCache.Data
 {
-    class Query
+    public class Query
     {
         private string startDate;
         private string endDate;
