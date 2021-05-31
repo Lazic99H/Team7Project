@@ -57,6 +57,7 @@ namespace DataCache
             int n = int.Parse(dates2[0]) - int.Parse(dates1[0]);
             for (int i = 0; i < n; i++)
             {
+
                 consumptions.Add(DataAccess.Service.ConsumptionService.Read(geoArea, dateTime.AddDays(i)));
             }*/
 
@@ -66,6 +67,10 @@ namespace DataCache
             //Dictionary<Data.Query, Dictionary<DateTime, List<DataAccess.Model.Consumption>>> kez = new Dictionary<Data.Query, Dictionary<DateTime, List<DataAccess.Model.Consumption>>>();
             //List<List<DataAccess.Model.Consumption>> list = dict.ToList<List<DataAccess.Model.Consumption>>();
             Data.Data.queries.Add(query, dict);
+
+
+                //consumptions.Add(DataAccess.Service.ConsumptionService.Read(geoArea, dateTime.AddDays(i)));
+            
 
 
             //return list;

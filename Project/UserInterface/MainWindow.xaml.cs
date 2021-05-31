@@ -75,7 +75,21 @@ namespace UserInterface
                 string day = $"{date[1]}/{date[2]}/{date[3]}";
 
                 DateTime time = DateTime.Parse(day);
-                writeFunk.Write(fileLoaction,time);
+
+                string check = writeFunk.Write(fileLoaction, time);
+                if (check == "dateExists")
+                {
+                    System.Windows.Forms.MessageBox.Show("Date already exists for that day and region!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else if (check == "good")
+                {
+                    System.Windows.Forms.MessageBox.Show("Data has been successfully added", "OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("Some of the hours are missing!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                }
 
                 csvFileName.Text = "";
                 fileLoaction = "";

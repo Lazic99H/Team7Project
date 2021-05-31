@@ -28,6 +28,7 @@ namespace FileWriter
 
             while ((line = sr.ReadLine()) != null)
             {
+                //mogao bi ovdje while ako je i > 24 buum eror 
                 string[] tokens = line.Split(' ', '\t');
                 if(validation.ValidateString(i,tokens) == "skip")
                 {
