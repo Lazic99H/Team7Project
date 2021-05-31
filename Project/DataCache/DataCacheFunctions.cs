@@ -9,18 +9,32 @@ namespace DataCache
 {
     public class DataCacheFunctions
     {
-        public List<DataAccess.Model.Consumption> CheckForQueries(string startDate, string endDate, string geoArea)
+        private static DataAccess.Service.ConsumptionService cs = new DataAccess.Service.ConsumptionService();
+
+        public void CheckForQueries(string startDate, string endDate, string geoArea)
         {
             Data.Query query = new Data.Query(startDate, endDate, geoArea);
             if (Data.Data.queries.ContainsKey(query))
             {
-                return Data.Data.queries[query];
+                //return Data.Data.queries[query];
             }
             else
             {
-                List<DataAccess.Model.Consumption> consumptions = ReadFromDataBase(startDate, endDate, geoArea);
-                Data.Data.queries[query] = consumptions;
-                return consumptions;
+                List<DateTime> days = new List<DateTime>();
+                string[] dates1 = startDate.Split('.');
+                string[] dates2 = endDate.Split('.');
+                int n = int.Parse(dates2[0]) - int.Parse(dates1[0]);
+
+                DateTime day = DateTime.Parse(startDate);
+                days.Add(day);
+                for (int i = 1; i < n+1; i++)
+                {
+                   // DateTime novi = new DateTime(int.Parse(dates1[0])+i, int.Parse(dates1[1]), int.Parse(dates1[2]));
+                    days.Add(new DateTime(int.Parse(dates1[0]) + i, int.Parse(dates1[1]), int.Parse(dates1[2])));
+                }
+                ReadFromDataBase(geoArea, days, new Data.Query(startDate, endDate, geoArea));
+                /*Data.Data.queries[query] = consumptions;
+                return consumptions;*/
             }
 
         }
@@ -30,11 +44,12 @@ namespace DataCache
             Data.Data.queries[query] = consumptions;
         }*/
 
-        public List<DataAccess.Model.Consumption> ReadFromDataBase(string startDate, string endDate, string geoArea)
+        public void ReadFromDataBase(string geoArea, List<DateTime> days, Data.Query query)
         {
             //mora biti projera da li postoje dani
+            //PROVJERITI DA LI DICT VRATI NULL I KOLIKO CLANOVA IMA, TJ DA LI IMA SVE DANE
             //ako korisnik unese od 14 do 15 dobija samo 14 ispisan?
-            string[] dates1 = startDate.Split('.');
+            /*string[] dates1 = startDate.Split('.');
             string[] dates2 = endDate.Split('.');
             List<DataAccess.Model.Consumption> consumptions = new List<DataAccess.Model.Consumption>();
             DateTime dateTime = DateTime.Parse(startDate);
@@ -43,16 +58,29 @@ namespace DataCache
             for (int i = 0; i < n; i++)
             {
                 consumptions.Add(DataAccess.Service.ConsumptionService.Read(geoArea, dateTime.AddDays(i)));
-            }
+            }*/
 
-            return consumptions;
+            Dictionary<DateTime, List<DataAccess.Model.Consumption>> dict = new Dictionary<DateTime, List<DataAccess.Model.Consumption>>();
+
+            dict = cs.Read(geoArea, days);
+            //Dictionary<Data.Query, Dictionary<DateTime, List<DataAccess.Model.Consumption>>> kez = new Dictionary<Data.Query, Dictionary<DateTime, List<DataAccess.Model.Consumption>>>();
+            //List<List<DataAccess.Model.Consumption>> list = dict.ToList<List<DataAccess.Model.Consumption>>();
+            Data.Data.queries.Add(query, dict);
+
+
+            //return list;
         }
 
         public void DeleteCache()
         {
             foreach (Data.Query item in Data.Data.queries.Keys)
             {
-                
+                DateTime start = new DateTime();
+                start = item.TimeSaved;
+                if (item.TimeSaved >= start.AddHours(3))
+                {
+                    Data.Data.queries.Remove(item);
+                }
             }
         }
     }
