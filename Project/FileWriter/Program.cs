@@ -12,11 +12,13 @@ namespace FileWriter
     {
         private static readonly ConsumptionService consumptionService = new ConsumptionService();
         private static ExtractData extract = new ExtractData();
+        private static Validation validation = new Validation();
 
-        public string Write(string path,DateTime time)
+        public string Write(string path,string time)
         {
             string ret = "good";
-            List<Consumption> newDate = extract.ReadFile(path, time);
+            DateTime day = validation.ValidateDate(time);
+            List<Consumption> newDate = extract.ReadFile(path, day);
 
             if (newDate != null)
             {

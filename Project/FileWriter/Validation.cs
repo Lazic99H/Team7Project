@@ -35,5 +35,16 @@ namespace FileWriter
 
             return ret;
         }
+
+        public DateTime ValidateDate(string fileName)
+        {
+            string[] date = fileName.Split('_', '.');
+
+            string day = $"{date[1]}/{date[2]}/{date[3]}";
+
+            DateTime time = DateTime.Parse(day);
+
+            return time;
+        }
     }
 }

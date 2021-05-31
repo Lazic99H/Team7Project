@@ -14,6 +14,11 @@ namespace DataAccess.Service
         private static readonly IConsumptionDAO consumptionDAO = new ConsumptionDAOImpl();
         //private static readonly ConsumptionService consumptionService = new ConsumptionService();
 
+        public List<Consumption> ReadDay(string reg, DateTime day)//za jedan dan null ako nema, lista ako ima
+        {
+            return consumptionDAO.Read(reg, day);
+        }
+
         public Dictionary<DateTime, List<Consumption>> Read(string reg, List<DateTime> days)//vraca null ako nema trazenih potrosnjih za odabrani opseg ili dictinary ako ima..
         {
             return consumptionDAO.Read(reg, days);
