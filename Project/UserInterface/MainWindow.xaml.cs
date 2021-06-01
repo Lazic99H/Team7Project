@@ -69,14 +69,8 @@ namespace UserInterface
 
             }
             else{
-                string temp = csvFileName.Text;
-                string[] date = temp.Split('_', '.');
-
-                string day = $"{date[1]}/{date[2]}/{date[3]}";
-
-                DateTime time = DateTime.Parse(day);
-
-                string check = writeFunk.Write(fileLoaction, time);
+                
+                string check = writeFunk.Write(fileLoaction, csvFileName.Text);
                 if (check == "dateExists")
                 {
                     System.Windows.Forms.MessageBox.Show("Date already exists for that day and region!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);

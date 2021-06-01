@@ -101,6 +101,9 @@ namespace DataAccess.DAO.Implementation
                 SaveError("Date for that region and date already exist");
                 return ret;
             }
+
+            FindCountry(newData[0].Region); // u find country ce dodati     
+            
             using (IDbConnection connection = ConnectionUtil_Pooling.GetConnection())
             {
                 
@@ -143,6 +146,60 @@ namespace DataAccess.DAO.Implementation
             }
 
             return ret;
+        }
+
+        public string FindCountry(string reg)
+        {
+            string ret = "";
+            string check = "select * from countrys where regija = :regija";
+
+            using (IDbConnection connection = ConnectionUtil_Pooling.GetConnection())
+            {
+
+                connection.Open();
+                using (IDbCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = check;
+
+                    ParameterUtil.AddParameter(command, "regija", DbType.String, 20);
+                    command.Prepare();
+                    ParameterUtil.SetParameterValue(command, "regija", reg);
+
+                    command.ExecuteNonQuery();
+
+                    using (IDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ret = "exists";
+                            break;
+                        }
+                    }
+                }
+            }
+            if (ret == "")
+                AddCountry(reg);
+            return ret;
+        }
+
+        public void AddCountry(string reg)
+        {
+            string query = "insert into countrys (name,regija) values(:name,:regija)";
+            DateTime time = DateTime.Now;
+            using (IDbConnection connection = ConnectionUtil_Pooling.GetConnection())
+            {
+                connection.Open();
+                using (IDbCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = query;
+                    ParameterUtil.AddParameter(command, "name", DbType.String, 20);
+                    ParameterUtil.AddParameter(command, "regija", DbType.String, 20);
+                    command.Prepare();
+                    ParameterUtil.SetParameterValue(command, "name", reg);
+                    ParameterUtil.SetParameterValue(command, "regija", reg);
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
 
