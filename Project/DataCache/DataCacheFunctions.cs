@@ -22,15 +22,15 @@ namespace DataCache
             else
             {
                 List<DateTime> days = new List<DateTime>();
-                string[] starts = startDate.Split('.');
-                string[] ends = endDate.Split('.');
+                string[] starts = startDate.Split('/');
+                string[] ends = endDate.Split('/');
                 DateTime day1 = DateTime.Parse(startDate);
                 DateTime day2 = DateTime.Parse(endDate);
 
                 int n;
-                if (int.Parse(starts[1]) == int.Parse(ends[1])) //isti mjesec
+                if (int.Parse(starts[0]) == int.Parse(ends[0])) //isti mjesec
                 {
-                    n = int.Parse(ends[0]) - int.Parse(starts[0]) + 1;
+                    n = int.Parse(ends[1]) - int.Parse(starts[1]) + 1;
                 }
                 else //u interfejsu je obezbjedjeno da mora biti krajnji datum veci od pocetnog
                 {
@@ -58,8 +58,8 @@ namespace DataCache
 
                 if (!found)
                 {
-                    int day = int.Parse(starts[0]);
-                    int month = int.Parse(starts[1]);
+                    int day = int.Parse(starts[1]);
+                    int month = int.Parse(starts[0]);
                     int year = int.Parse(starts[2]);
                     for (int i = 0; i < n; i++)
                     {

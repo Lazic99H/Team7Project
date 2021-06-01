@@ -31,9 +31,9 @@ namespace UserInterface
             get; set;
         }
 
-        public static BindingList<string> countrys
+        public static BindingList<string> Countrys
         {
-            get;set;
+            get; set;
         }
 
         public static Program writeFunk = new Program();
@@ -42,9 +42,13 @@ namespace UserInterface
         public MainWindow()
         {
             consumptions = new BindingList<Consumption>();
-            countrys = new BindingList<string>();
-            countrys.Add("SRB");
+            Countrys = new BindingList<string>();
+            foreach (var temp in writeFunk.ReadAllCountrys())
+            {
+                Countrys.Add(temp);
+            }
             InitializeComponent();
+            DataContext = this;//cuvena linija koda
         }
 
         string fileLoaction = "";
@@ -72,13 +76,14 @@ namespace UserInterface
 
         private void Button_Click_Load(object sender, RoutedEventArgs e)
         {
-            if(csvFileName.Text == "")
+            if (csvFileName.Text == "")
             {
                 System.Windows.Forms.MessageBox.Show("Chose a file!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
-            else{
-                
+            else
+            {
+
                 string check = writeFunk.Write(fileLoaction, csvFileName.Text);
                 if (check == "dateExists")
                 {
@@ -86,7 +91,13 @@ namespace UserInterface
                 }
                 else if (check == "good")
                 {
+                    Countrys = new BindingList<string>();
+                    foreach (var temp in writeFunk.ReadAllCountrys())
+                    {
+                        Countrys.Add(temp);
+                    }
                     System.Windows.Forms.MessageBox.Show("Data has been successfully added", "OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 }
                 else
                 {
@@ -96,15 +107,16 @@ namespace UserInterface
 
                 csvFileName.Text = "";
                 fileLoaction = "";
-            }// pozove funkciju iz FileWriter.... i obrise to iz csvFileName
+            }
         }
-
         private void Button_Click_Find(object sender, RoutedEventArgs e)
         {
-            if(endDate.Text.Equals("") || startDate.Text.Equals(""))
+
+            if (endDate.Text.Equals("") || startDate.Text.Equals(""))
             {
                 System.Windows.Forms.MessageBox.Show("All fields must be filled in correctly", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }else if (idText.Text.Trim().Equals(""))
+            }
+            else if (idText.Text.Trim().Equals(""))
             {
                 System.Windows.Forms.MessageBox.Show("All fields must be filled in correctly", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -112,21 +124,33 @@ namespace UserInterface
             {
                 string to = startDate.Text;
                 string end = endDate.Text;
-                string[] tos = to.Split('.');
-                string[] ends = end.Split('.');
+                string[] tos = to.Split('/');
+                string[] ends = end.Split('/');
                 if (int.Parse(tos[2]) > int.Parse(ends[2]))
                 {
                     System.Windows.Forms.MessageBox.Show("Starting date must be lower then ending date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else if (int.Parse(tos[2]) == int.Parse(ends[2]))
                 {
-                    if (int.Parse(tos[1]) > int.Parse(ends[1]))
+                    if (int.Parse(tos[0]) > int.Parse(ends[0]))
                     {
                         System.Windows.Forms.MessageBox.Show("Starting date must be lower then ending date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-                    else if (int.Parse(tos[1]) == int.Parse(ends[1]) && int.Parse(tos[0]) > int.Parse(ends[0]))
+                    else if (int.Parse(tos[0]) == int.Parse(ends[0]) && int.Parse(tos[1]) > int.Parse(ends[1]))
                     {
                         System.Windows.Forms.MessageBox.Show("Starting date must be lower then ending date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        DataCache.DataCacheFunctions dataCacheFunctions = new DataCacheFunctions();
+                        List<List<DataAccess.Model.Consumption>> lista = dataCacheFunctions.CheckForQueries(to, end, idText.Text);
+                        foreach (List<DataAccess.Model.Consumption> item in lista)
+                        {
+                            foreach (DataAccess.Model.Consumption item2 in item)
+                            {
+                                consumptions.Add(item2);
+                            }
+                        }
                     }
                 }
                 else
@@ -143,7 +167,9 @@ namespace UserInterface
                 }
             }
 
-            
+
         }
+
+
     }
 }

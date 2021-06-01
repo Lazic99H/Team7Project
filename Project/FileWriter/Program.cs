@@ -33,6 +33,11 @@ namespace FileWriter
             return ret;
         }
 
+        public List<string> ReadAllCountrys()
+        {
+            return consumptionService.FindAllCountrys();
+        }
+
         static void Main(string[] args)
         {
         }
