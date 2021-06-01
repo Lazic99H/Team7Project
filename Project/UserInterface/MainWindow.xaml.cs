@@ -33,7 +33,7 @@ namespace UserInterface
 
         public static BindingList<string> Countrys
         {
-            get;set;
+            get; set;
         }
 
         public static Program writeFunk = new Program();
@@ -76,13 +76,14 @@ namespace UserInterface
 
         private void Button_Click_Load(object sender, RoutedEventArgs e)
         {
-            if(csvFileName.Text == "")
+            if (csvFileName.Text == "")
             {
                 System.Windows.Forms.MessageBox.Show("Chose a file!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
-            else{
-                
+            else
+            {
+
                 string check = writeFunk.Write(fileLoaction, csvFileName.Text);
                 if (check == "dateExists")
                 {
@@ -90,6 +91,11 @@ namespace UserInterface
                 }
                 else if (check == "good")
                 {
+                    Countrys = new BindingList<string>();
+                    foreach (var temp in writeFunk.ReadAllCountrys())
+                    {
+                        Countrys.Add(temp);
+                    }
                     System.Windows.Forms.MessageBox.Show("Data has been successfully added", "OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
@@ -101,20 +107,21 @@ namespace UserInterface
 
                 csvFileName.Text = "";
                 fileLoaction = "";
+            }
         }
-
         private void Button_Click_Find(object sender, RoutedEventArgs e)
         {
 
             if (endDate.Text.Equals("") || startDate.Text.Equals(""))
             {
                 System.Windows.Forms.MessageBox.Show("All fields must be filled in correctly", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }else if (idText.Text.Trim().Equals(""))
+            }
+            else if (idText.Text.Trim().Equals(""))
             {
                 System.Windows.Forms.MessageBox.Show("All fields must be filled in correctly", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
-            { 
+            {
                 string to = startDate.Text;
                 string end = endDate.Text;
                 string[] tos = to.Split('.');
@@ -148,8 +155,9 @@ namespace UserInterface
                 }
             }
 
-            
+
         }
-        
+
+
     }
 }
