@@ -31,7 +31,7 @@ namespace UserInterface
             get; set;
         }
 
-        public static BindingList<string> countrys
+        public static BindingList<string> Countrys
         {
             get;set;
         }
@@ -42,9 +42,13 @@ namespace UserInterface
         public MainWindow()
         {
             consumptions = new BindingList<Consumption>();
-            countrys = new BindingList<string>();
-            countrys.Add("SRB");
+            Countrys = new BindingList<string>();
+            foreach (var temp in writeFunk.ReadAllCountrys())
+            {
+                Countrys.Add(temp);
+            }
             InitializeComponent();
+            DataContext = this;
         }
 
         string fileLoaction = "";
@@ -101,7 +105,8 @@ namespace UserInterface
 
         private void Button_Click_Find(object sender, RoutedEventArgs e)
         {
-            if(endDate.Text.Equals("") || startDate.Text.Equals(""))
+
+            if (endDate.Text.Equals("") || startDate.Text.Equals(""))
             {
                 System.Windows.Forms.MessageBox.Show("All fields must be filled in correctly", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }else if (idText.Text.Trim().Equals(""))
@@ -109,7 +114,7 @@ namespace UserInterface
                 System.Windows.Forms.MessageBox.Show("All fields must be filled in correctly", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
-            {
+            { 
                 string to = startDate.Text;
                 string end = endDate.Text;
                 string[] tos = to.Split('.');
@@ -145,5 +150,6 @@ namespace UserInterface
 
             
         }
+        
     }
 }
