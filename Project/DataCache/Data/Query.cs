@@ -27,5 +27,17 @@ namespace DataCache.Data
             get { return timeSaved; }
             //set { }
         }
+
+        public string StartDate
+        {
+            get { return startDate; }
+            //set { }
+        }
+
+        public string EndDate
+        {
+            get { return endDate; }
+            set { endDate = value; }
+        }
     }
 }

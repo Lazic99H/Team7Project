@@ -101,6 +101,10 @@
       <Project>{DCAF0E1D-84E8-40D1-9E51-5942092318E3}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataCache\DataCache.csproj">
+      <Project>{5b474dc9-4d9d-4e10-b7ca-469a49a524d1}</Project>
+      <Name>DataCache</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FileWriter\FileWriter.csproj">
       <Project>{ABA3B1AC-DBD5-4839-9394-0C61E41844B8}</Project>
       <Name>FileWriter</Name>
