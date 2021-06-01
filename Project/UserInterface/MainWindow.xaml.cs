@@ -144,11 +144,19 @@ namespace UserInterface
                     {
                         DataCache.DataCacheFunctions dataCacheFunctions = new DataCacheFunctions();
                         List<List<DataAccess.Model.Consumption>> lista = dataCacheFunctions.CheckForQueries(to, end, idText.Text);
-                        foreach (List<DataAccess.Model.Consumption> item in lista)
+                        if (lista == null)
                         {
-                            foreach (DataAccess.Model.Consumption item2 in item)
+                            noContentLabel.Content = "There are no data with this request.";
+                        }
+                        else
+                        {
+                            noContentLabel.Content = "";
+                            foreach (List<DataAccess.Model.Consumption> item in lista)
                             {
-                                consumptions.Add(item2);
+                                foreach (DataAccess.Model.Consumption item2 in item)
+                                {
+                                    consumptions.Add(item2);
+                                }
                             }
                         }
                     }
@@ -157,11 +165,19 @@ namespace UserInterface
                 {
                     DataCache.DataCacheFunctions dataCacheFunctions = new DataCacheFunctions();
                     List<List<DataAccess.Model.Consumption>> lista = dataCacheFunctions.CheckForQueries(to, end, idText.Text);
-                    foreach (List<DataAccess.Model.Consumption> item in lista)
+                    if (lista == null)
                     {
-                        foreach (DataAccess.Model.Consumption item2 in item)
+                        noContentLabel.Content = "There are no data with this request.";
+                    }
+                    else
+                    {
+                        noContentLabel.Content = "";
+                        foreach (List<DataAccess.Model.Consumption> item in lista)
                         {
-                            consumptions.Add(item2);
+                            foreach (DataAccess.Model.Consumption item2 in item)
+                            {
+                                consumptions.Add(item2);
+                            }
                         }
                     }
                 }
