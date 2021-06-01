@@ -102,12 +102,12 @@ namespace DataAccess.DAO.Implementation
                 return ret;
             }
 
-            FindCountry(newData[0].Region); // u find country ce dodati     
+             // u find country ce dodati     
             
             using (IDbConnection connection = ConnectionUtil_Pooling.GetConnection())
             {
-                
                 connection.Open();
+                FindCountry(newData[0].Region, connection);
                 foreach (var data in newData)
                 {
                     ret = Write(data, connection);//ako dole foreach ne radi onda ovdje ga pozvati za svaki
@@ -173,15 +173,14 @@ namespace DataAccess.DAO.Implementation
             return allCountrys;
         }
 
-        public string FindCountry(string reg)
+        public string FindCountry(string reg,IDbConnection connection)
         {
             string ret = "";
             string check = "select * from countrys where regija = :regija";
 
-            using (IDbConnection connection = ConnectionUtil_Pooling.GetConnection())
-            {
+      //      using (IDbConnection connection = ConnectionUtil_Pooling.GetConnection())
+        //    {
 
-                connection.Open();
                 using (IDbCommand command = connection.CreateCommand())
                 {
                     command.CommandText = check;
@@ -190,18 +189,16 @@ namespace DataAccess.DAO.Implementation
                     command.Prepare();
                     ParameterUtil.SetParameterValue(command, "regija", reg);
 
-                    command.ExecuteNonQuery();
-
                     using (IDataReader reader = command.ExecuteReader())
                     {
-                        while (reader.Read())
+                        while (reader.Read())//oVJDE NISTA NE CITAA TI BOGA
                         {
-                            ret = "exists";
+                            ret = reader.GetString(0);
                             break;
                         }
                     }
                 }
-            }
+            
             if (ret == "")
                 AddCountry(reg);
             return ret;

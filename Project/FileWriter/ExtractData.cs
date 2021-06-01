@@ -30,16 +30,17 @@ namespace FileWriter
             {
                 //mogao bi ovdje while ako je i > 24 buum eror 
                 string[] tokens = line.Split(' ', '\t');
-                if(validation.ValidateString(i,tokens) == "skip")
+                string var = validation.ValidateString(i, tokens);
+                if (var == "skip")
                 {
                     i--; 
                 }
-                else if(validation.ValidateString(i, tokens) == "good")
+                else if(var == "good")
                 {
                     Consumption temp = new Consumption(i, Int32.Parse(tokens[1]), tokens[2], time);
                     consumptions.Add(temp);
                 }
-                else if (validation.ValidateString(i, tokens) == "hourMissing")
+                else if (var == "hourMissing")
                 {
                     consumptionService.SaveError("Hour is missing");
                     consumptions = null;

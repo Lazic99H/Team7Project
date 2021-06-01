@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileSystem", "FileSystem", 
 	ProjectSection(SolutionItems) = preProject
 		..\..\..\..\Desktop\FAKS\RES\Projekat\csv\ostv_2018_05_07.csv = ..\..\..\..\Desktop\FAKS\RES\Projekat\csv\ostv_2018_05_07.csv
 		..\..\..\..\Desktop\FAKS\RES\Projekat\csv\prog_2018_05_07.csv = ..\..\..\..\Desktop\FAKS\RES\Projekat\csv\prog_2018_05_07.csv
+		..\..\..\..\Desktop\FAKS\RES\Projekat\csv\prog_2020_05_01.csv = ..\..\..\..\Desktop\FAKS\RES\Projekat\csv\prog_2020_05_01.csv
+		..\..\..\..\Desktop\FAKS\RES\Projekat\csv\prog_2020_05_02.csv = ..\..\..\..\Desktop\FAKS\RES\Projekat\csv\prog_2020_05_02.csv
+		..\..\..\..\Desktop\FAKS\RES\Projekat\csv\prog_2020_05_03.csv = ..\..\..\..\Desktop\FAKS\RES\Projekat\csv\prog_2020_05_03.csv
+		..\..\..\..\Desktop\FAKS\RES\Projekat\csv\prog_2020_05_04.csv = ..\..\..\..\Desktop\FAKS\RES\Projekat\csv\prog_2020_05_04.csv
 	EndProjectSection
 EndProject
 Global

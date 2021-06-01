@@ -124,21 +124,33 @@ namespace UserInterface
             {
                 string to = startDate.Text;
                 string end = endDate.Text;
-                string[] tos = to.Split('.');
-                string[] ends = end.Split('.');
+                string[] tos = to.Split('/');
+                string[] ends = end.Split('/');
                 if (int.Parse(tos[2]) > int.Parse(ends[2]))
                 {
                     System.Windows.Forms.MessageBox.Show("Starting date must be lower then ending date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else if (int.Parse(tos[2]) == int.Parse(ends[2]))
                 {
-                    if (int.Parse(tos[1]) > int.Parse(ends[1]))
+                    if (int.Parse(tos[0]) > int.Parse(ends[0]))
                     {
                         System.Windows.Forms.MessageBox.Show("Starting date must be lower then ending date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-                    else if (int.Parse(tos[1]) == int.Parse(ends[1]) && int.Parse(tos[0]) > int.Parse(ends[0]))
+                    else if (int.Parse(tos[0]) == int.Parse(ends[0]) && int.Parse(tos[1]) > int.Parse(ends[1]))
                     {
                         System.Windows.Forms.MessageBox.Show("Starting date must be lower then ending date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        DataCache.DataCacheFunctions dataCacheFunctions = new DataCacheFunctions();
+                        List<List<DataAccess.Model.Consumption>> lista = dataCacheFunctions.CheckForQueries(to, end, idText.Text);
+                        foreach (List<DataAccess.Model.Consumption> item in lista)
+                        {
+                            foreach (DataAccess.Model.Consumption item2 in item)
+                            {
+                                consumptions.Add(item2);
+                            }
+                        }
                     }
                 }
                 else
