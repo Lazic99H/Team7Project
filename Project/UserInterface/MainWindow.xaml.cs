@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DataCache;
 
 namespace UserInterface
 {
@@ -100,10 +101,10 @@ namespace UserInterface
         {
             if(endDate.Text.Equals("") || startDate.Text.Equals(""))
             {
-                System.Windows.Forms.MessageBox.Show("Sva polja moraju biti ispravno popunjena", "Greska", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                System.Windows.Forms.MessageBox.Show("All fields must be filled in correctly", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }else if (idText.Text.Trim().Equals(""))
             {
-                System.Windows.Forms.MessageBox.Show("Sva polja moraju biti popunjena", "Greska", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                System.Windows.Forms.MessageBox.Show("All fields must be filled in correctly", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
@@ -111,9 +112,32 @@ namespace UserInterface
                 string end = endDate.Text;
                 string[] tos = to.Split('.');
                 string[] ends = end.Split('.');
-                if (int.Parse(tos[0]) >= int.Parse(ends[0]))
+                if (int.Parse(tos[2]) > int.Parse(ends[2]))
                 {
-                    System.Windows.Forms.MessageBox.Show("Pocetni datum mora biti manji od krajnjeg datuma", "Greska", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    System.Windows.Forms.MessageBox.Show("Starting date must be lower then ending date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else if (int.Parse(tos[2]) == int.Parse(ends[2]))
+                {
+                    if (int.Parse(tos[1]) > int.Parse(ends[1]))
+                    {
+                        System.Windows.Forms.MessageBox.Show("Starting date must be lower then ending date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else if (int.Parse(tos[1]) == int.Parse(ends[1]) && int.Parse(tos[0]) > int.Parse(ends[0]))
+                    {
+                        System.Windows.Forms.MessageBox.Show("Starting date must be lower then ending date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    DataCache.DataCacheFunctions dataCacheFunctions = new DataCacheFunctions();
+                    List<List<DataAccess.Model.Consumption>> lista = dataCacheFunctions.CheckForQueries(to, end, idText.Text);
+                    foreach (List<DataAccess.Model.Consumption> item in lista)
+                    {
+                        foreach (DataAccess.Model.Consumption item2 in item)
+                        {
+                            consumptions.Add(item2);
+                        }
+                    }
                 }
             }
 
