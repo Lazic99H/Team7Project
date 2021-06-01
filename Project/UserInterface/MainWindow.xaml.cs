@@ -48,7 +48,7 @@ namespace UserInterface
                 Countrys.Add(temp);
             }
             InitializeComponent();
-            DataContext = this;
+            DataContext = this;//cuvena linija koda
         }
 
         string fileLoaction = "";

@@ -10,19 +10,19 @@
 
         <Canvas.Resources>
             <DataTemplate x:Key="Hour"  >
-                    <StackPanel Width="100" Height="20">
+                    <StackPanel Width="100" Height="15">
                         <TextBlock x:Name="hour" Text="{Binding Hour}"/>
                     </StackPanel>
                 </DataTemplate>
 
                 <DataTemplate x:Key="Load">
-                    <StackPanel Width="100" Height="20">
+                    <StackPanel Width="100" Height="15">
                         <TextBlock x:Name="load" Text="{Binding Load}"/>
                     </StackPanel>
                 </DataTemplate>
 
                 <DataTemplate x:Key="Day">
-                    <StackPanel Width="350" Height="20">
+                    <StackPanel Width="350" Height="15">
                     <TextBlock x:Name="day" Text="{Binding Day, StringFormat={}{0:MM-dd-yyyy}}">
 
                         </TextBlock>
@@ -30,7 +30,7 @@
                 </DataTemplate>
 
                 <DataTemplate x:Key="Region">
-                    <StackPanel Width="100" Height="100">
+                    <StackPanel Width="100" Height="15">
                         <TextBlock x:Name="region" Text="{Binding Region}"/>
                     </StackPanel>
                 </DataTemplate>
@@ -59,7 +59,7 @@
 
         <DataGrid IsReadOnly="True" Width="540" HorizontalAlignment="Right" ItemsSource="{Binding consumptions}" AutoGenerateColumns="False" VerticalAlignment="Top" Height="400" Canvas.Left="272" Canvas.Top="10">
             <DataGrid.Columns >
-                <DataGridTemplateColumn Header="Hour" Width="100"  CellTemplate="{StaticResource Hour}"  />
+                <DataGridTemplateColumn Header="Hour" Width="100" CellTemplate="{StaticResource Hour}"  />
                 <DataGridTemplateColumn Header="Consumption" Width="100"  CellTemplate="{StaticResource Load}"  />
                 <DataGridTemplateColumn Header="Region" Width="100"  CellTemplate="{StaticResource Region}" />
                 <DataGridTemplateColumn Header="Date" Width="*"  CellTemplate="{StaticResource Day}" />

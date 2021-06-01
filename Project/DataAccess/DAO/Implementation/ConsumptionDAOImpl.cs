@@ -176,16 +176,17 @@ namespace DataAccess.DAO.Implementation
         public string FindCountry(string reg,IDbConnection connection)
         {
             string ret = "";
-            string check = "select * from countrys where regija = :regija";
+            string query = "select * from countrys where regija = :regija";
+           // string query = "select * from countrys where regija = 'kad'";
 
-      //      using (IDbConnection connection = ConnectionUtil_Pooling.GetConnection())
-        //    {
+            //      using (IDbConnection connection = ConnectionUtil_Pooling.GetConnection())
+            //    {
 
                 using (IDbCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = check;
+                    command.CommandText = query;
 
-                    ParameterUtil.AddParameter(command, "regija", DbType.String, 20);
+                    ParameterUtil.AddParameter(command, "regija", DbType.String, reg.Length);
                     command.Prepare();
                     ParameterUtil.SetParameterValue(command, "regija", reg);
 
@@ -200,17 +201,15 @@ namespace DataAccess.DAO.Implementation
                 }
             
             if (ret == "")
-                AddCountry(reg);
+                AddCountry(reg,connection);
             return ret;
         }
 
-        public void AddCountry(string reg)
+        public void AddCountry(string reg, IDbConnection connection)
         {
             string query = "insert into countrys (name,regija) values(:name,:regija)";
             DateTime time = DateTime.Now;
-            using (IDbConnection connection = ConnectionUtil_Pooling.GetConnection())
-            {
-                connection.Open();
+            
                 using (IDbCommand command = connection.CreateCommand())
                 {
                     command.CommandText = query;
@@ -221,7 +220,7 @@ namespace DataAccess.DAO.Implementation
                     ParameterUtil.SetParameterValue(command, "regija", reg);
                     command.ExecuteNonQuery();
                 }
-            }
+            
         }
 
 
