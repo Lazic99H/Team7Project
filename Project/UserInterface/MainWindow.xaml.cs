@@ -31,6 +31,8 @@ namespace UserInterface
             get; set;
         }
 
+        public static int counter = 0;
+
         public static BindingList<string> Countrys
         {
             get; set;
@@ -142,6 +144,11 @@ namespace UserInterface
                     }
                     else
                     {
+                        counter++;
+                        if (counter != 1)
+                        {
+                            consumptions.Clear();
+                        }
                         DataCache.DataCacheFunctions dataCacheFunctions = new DataCacheFunctions();
                         List<List<DataAccess.Model.Consumption>> lista = dataCacheFunctions.CheckForQueries(to, end, idText.Text);
                         if (lista == null)
