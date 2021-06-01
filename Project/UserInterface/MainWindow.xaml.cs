@@ -31,11 +31,19 @@ namespace UserInterface
             get; set;
         }
 
+        public static BindingList<string> countrys
+        {
+            get;set;
+        }
+
         public static Program writeFunk = new Program();
 
 
         public MainWindow()
         {
+            consumptions = new BindingList<Consumption>();
+            countrys = new BindingList<string>();
+            countrys.Add("SRB");
             InitializeComponent();
         }
 

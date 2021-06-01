@@ -14,6 +14,11 @@ namespace DataAccess.Service
         private static readonly IConsumptionDAO consumptionDAO = new ConsumptionDAOImpl();
         //private static readonly ConsumptionService consumptionService = new ConsumptionService();
 
+        public List<string> FindAllCountrys()
+        {
+            return consumptionDAO.FindAllCountrys();
+        }
+
         public List<Consumption> ReadDay(string reg, DateTime day)//za jedan dan null ako nema, lista ako ima
         {
             return consumptionDAO.Read(reg, day);

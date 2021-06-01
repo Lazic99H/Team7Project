@@ -148,6 +148,31 @@ namespace DataAccess.DAO.Implementation
             return ret;
         }
 
+        public List<string> FindAllCountrys()
+        {
+            List<string> allCountrys = new List<string>();
+            string query = "select * from countrys";
+
+            using (IDbConnection connection = ConnectionUtil_Pooling.GetConnection())
+            {
+                connection.Open();
+                using (IDbCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = query;
+                    command.Prepare();
+
+                    using (IDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            allCountrys.Add(reader.GetString(0));
+                        }
+                    }
+                }
+            }
+            return allCountrys;
+        }
+
         public string FindCountry(string reg)
         {
             string ret = "";

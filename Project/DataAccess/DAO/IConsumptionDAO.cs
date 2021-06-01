@@ -14,6 +14,8 @@ namespace DataAccess.DAO
 
         List<Consumption> Read(string reg, DateTime day);
 
+        List<string> FindAllCountrys();
+
         bool Write(List<Consumption> newData);
 
         void SaveError(string message);

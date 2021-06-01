@@ -47,9 +47,9 @@
         <Label Content="To" FontWeight="Light" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Canvas.Left="39" Canvas.Top="95"/>
         <DatePicker Height="25" HorizontalAlignment="Left" Name="endDate"   VerticalAlignment="Top" Width="145" Canvas.Left="112" Canvas.Top="95" />
         <Label Content="ID" FontWeight="Light" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Canvas.Left="39" Canvas.Top="146"/>
-        <TextBox Name="idText" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="145" Canvas.Left="112" Canvas.Top="146"/>
+        <TextBox  Name="idText" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="145" Canvas.Left="112" Canvas.Top="146"/>
         <Button Content="Find" Width="185" Height="35" HorizontalAlignment="left" VerticalAlignment="Top" Canvas.Left="60" Canvas.Top="191" Click="Button_Click_Find"/>
-
+        
         <Label HorizontalAlignment="Left" VerticalAlignment="Top" Width="250" Height="170" BorderBrush="Gray" BorderThickness="1" Canvas.Top="245" Canvas.Left="-359"/>
         <Label Content="Chose a file" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="25" Canvas.Left="39" Canvas.Top="270"/>
         <Button Content="Browser" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Click="Button_Click_Browser" Canvas.Left="132" Canvas.Top="270"/>
