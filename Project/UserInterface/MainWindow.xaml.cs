@@ -91,6 +91,7 @@ namespace UserInterface
                 else if (check == "good")
                 {
                     System.Windows.Forms.MessageBox.Show("Data has been successfully added", "OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 }
                 else
                 {
@@ -100,7 +101,6 @@ namespace UserInterface
 
                 csvFileName.Text = "";
                 fileLoaction = "";
-            }// pozove funkciju iz FileWriter.... i obrise to iz csvFileName
         }
 
         private void Button_Click_Find(object sender, RoutedEventArgs e)
