@@ -18,11 +18,15 @@ namespace FileWriter
 
         public List<Consumption> ReadFile(string path,DateTime time)
         {
-            if(path == "" || path == null)
+            if(path == null || path.Trim() == "")
             {
                 return null;
             }
 
+            if(time == new DateTime())
+            {
+                return null;
+            }
             List<Consumption> consumptions = new List<Consumption>();
             //path = HostingEnvironment.MapPath(path); aha ovo je da pronadje putanju
 
@@ -31,7 +35,7 @@ namespace FileWriter
             string line = "";
 
             int i = 0;
-
+            
             while ((line = sr.ReadLine()) != null)
             {
                 //mogao bi ovdje while ako je i > 24 buum eror 
@@ -61,6 +65,12 @@ namespace FileWriter
 
                 i++;
             }
+            i--;
+            if(i != 24)
+            {
+                consumptions = null;
+            }
+
             return consumptions;
         }
     }

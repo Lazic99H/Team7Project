@@ -71,7 +71,6 @@ namespace FileWriter
                 throw new ArgumentNullException("Datum ne smije biti null"); //ovo nece nikad uci jer mora poslat nesto
             }
 
-
             string[] date = fileName.Split('_', '.');
 
             if(date.Length <= 4 || date.Length > 5)
