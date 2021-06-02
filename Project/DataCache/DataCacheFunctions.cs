@@ -158,14 +158,19 @@ namespace DataCache
                 List<List<DataAccess.Model.Consumption>> list = dict.Values.ToList();
                 return list;
             }
-            
+          
+        }
 
-
-                //consumptions.Add(DataAccess.Service.ConsumptionService.Read(geoArea, dateTime.AddDays(i)));
-            
-
-
-            //return list;
+        public void Deamon()
+        {
+            while (true)
+            {
+                /*Task.Run(() => { DataCacheFunctions.DeleteCache();});
+                Thread.Sleep(10800000);*/
+                Thread tesThread = new Thread(DataCacheFunctions.DeleteCache);
+                tesThread.IsBackground = true;
+                tesThread.Start();
+            }
         }
 
         public static void DeleteCache()
@@ -182,6 +187,25 @@ namespace DataCache
 
             //Thread.Sleep(10800000);
             Thread.Sleep(60000);
+
+            /*using (TaskService ts = new TaskService())
+            {
+                // Create a new task definition and assign properties
+                TaskDefinition td = ts.NewTask();
+                td.RegistrationInfo.Description = "Does something";
+
+                // Create a trigger that will fire the task at this time every other day
+                td.Triggers.Add(new DailyTrigger { DaysInterval = 2 });
+
+                // Create an action that will launch Notepad whenever the trigger fires
+                td.Actions.Add(new ExecAction("notepad.exe", "c:\\test.log", null));
+
+                // Register the task in the root folder
+                ts.RootFolder.RegisterTaskDefinition(@"Test", td);
+
+                // Remove the task we just created
+                ts.RootFolder.DeleteTask("Test");
+            }*/
         }
     }
 }

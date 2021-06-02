@@ -38,8 +38,10 @@ namespace UserInterface
             get; set;
         }
 
-        public static Program writeFunk = new Program();
-        DataCache.DataCacheFunctions dataCacheFunctions = new DataCacheFunctions();
+        public static FileWriter.Program writeFunk = new FileWriter.Program();
+        //public static DataCache.Program = new DataCache.Program();
+        public static DataCache.DataCacheFunctions dataCacheFunctions = new DataCacheFunctions();
+        
 
 
         public MainWindow()
@@ -52,6 +54,7 @@ namespace UserInterface
             }
             InitializeComponent();
             DataContext = this;//cuvena linija koda
+            
         }
 
         string fileLoaction = "";
@@ -166,6 +169,7 @@ namespace UserInterface
                                     consumptions.Add(item2);
                                 }
                             }
+                            //dataCacheFunctions.Deamon();
                         }
                     }
                 }
