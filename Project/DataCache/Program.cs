@@ -15,10 +15,11 @@ namespace DataCache
             {
                 /*Task.Run(() => { DataCacheFunctions.DeleteCache();});
                 Thread.Sleep(10800000);*/
-                Thread tesThread = new Thread(DataCacheFunctions.DeleteCache);
+               Thread tesThread = new Thread(DataCacheFunctions.DeleteCache);
                 tesThread.IsBackground = true;
                 tesThread.Start();
             }
+            
             
         }
     }

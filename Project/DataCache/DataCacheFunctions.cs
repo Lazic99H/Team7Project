@@ -40,25 +40,21 @@ namespace DataCache
                 }
 
                 bool found = false;
-                if (Data.Data.queries.Count != 0 || Data.Data.queries != null)
+                foreach (Data.Query item in Data.Data.queries.Keys)
                 {
-                    foreach (Data.Query item in Data.Data.queries.Keys)
+                    List<List<DataAccess.Model.Consumption>> listToRet = new List<List<DataAccess.Model.Consumption>>();
+                    if (DateTime.Compare(DateTime.Parse(item.StartDate), day1) <= 0 && DateTime.Compare(DateTime.Parse(item.EndDate), DateTime.Parse(endDate)) >= 0)
                     {
-                        List<List<DataAccess.Model.Consumption>> listToRet = new List<List<DataAccess.Model.Consumption>>();
-                        if (DateTime.Compare(DateTime.Parse(item.StartDate), day1) <= 0 && DateTime.Compare(DateTime.Parse(item.EndDate), DateTime.Parse(endDate)) >= 0)
+                        found = true;
+                        for (int i=0; i < n; i++)
                         {
-                            found = true;
-                            //List<List<DataAccess.Model.Consumption>> listToRet = new List<List<DataAccess.Model.Consumption>>();
-                            
-                            for (int i=0; i < n; i++)
-                            {
-                                listToRet.Add(Data.Data.queries[item][day1.AddDays(i)]);
-                            }
-                            return listToRet;
+                            listToRet.Add(Data.Data.queries[item][day1.AddDays(i)]);
                         }
-
+                        return listToRet;
                     }
+
                 }
+                
 
                 if (!found)
                 {
@@ -69,8 +65,6 @@ namespace DataCache
                     days.Add(dayToAdd);
                     for (int i = 1; i < n; i++)
                     {
-                        // DateTime novi = new DateTime(int.Parse(dates1[0])+i, int.Parse(dates1[1]), int.Parse(dates1[2]));
-                        //days.Add(new DateTime(year, month, day + i));
                         days.Add(dayToAdd.AddDays(i));
                     }
                     List<List<DataAccess.Model.Consumption>> retList = ReadFromDataBase(geoArea, days, new Data.Query(startDate, endDate, geoArea), n);
@@ -78,8 +72,7 @@ namespace DataCache
                 }
 
                 return null;
-                /*Data.Data.queries[query] = consumptions;
-                return consumptions;*/
+                
             }
 
         }
@@ -91,21 +84,6 @@ namespace DataCache
 
         public List<List<DataAccess.Model.Consumption>> ReadFromDataBase(string geoArea, List<DateTime> days, Data.Query query, int numOfDays)
         {
-            //mora biti projera da li postoje dani
-            //PROVJERITI DA LI DICT VRATI NULL I KOLIKO CLANOVA IMA, TJ DA LI IMA SVE DANE
-            //ako korisnik unese od 14 do 15 dobija samo 14 ispisan?
-            /*string[] dates1 = startDate.Split('.');
-            string[] dates2 = endDate.Split('.');
-            List<DataAccess.Model.Consumption> consumptions = new List<DataAccess.Model.Consumption>();
-            DateTime dateTime = DateTime.Parse(startDate);
-
-            int n = int.Parse(dates2[0]) - int.Parse(dates1[0]);
-            for (int i = 0; i < n; i++)
-            {
-
-                consumptions.Add(DataAccess.Service.ConsumptionService.Read(geoArea, dateTime.AddDays(i)));
-            }*/
-
             Dictionary<DateTime, List<DataAccess.Model.Consumption>> dict = new Dictionary<DateTime, List<DataAccess.Model.Consumption>>();
             Dictionary<DateTime, List<DataAccess.Model.Consumption>> pomocni = new Dictionary<DateTime, List<DataAccess.Model.Consumption>>();
 
@@ -156,6 +134,7 @@ namespace DataCache
             else
             {
                 retDate = days[numOfDays-1].ToString();
+                pomocni = dict;
             }
 
             if (retDate == "")
@@ -169,7 +148,11 @@ namespace DataCache
             }
             else
             {
-                
+                string[] strings = retDate.Split(' ');
+                if (strings.Length == 3)
+                {
+                    retDate = strings[0];
+                }
                 query.EndDate = retDate;
                 Data.Data.queries.Add(query, pomocni);
                 List<List<DataAccess.Model.Consumption>> list = dict.Values.ToList();
@@ -191,13 +174,14 @@ namespace DataCache
             {
                 DateTime start = new DateTime();
                 start = item.TimeSaved;
-                if (item.TimeSaved >= start.AddHours(3))
+                if (item.TimeSaved >= start.AddMilliseconds(30000))
                 {
                     Data.Data.queries.Remove(item);
                 }
             }
 
-            Thread.Sleep(10800000);
+            //Thread.Sleep(10800000);
+            Thread.Sleep(60000);
         }
     }
 }

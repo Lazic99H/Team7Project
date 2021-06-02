@@ -39,6 +39,7 @@ namespace UserInterface
         }
 
         public static Program writeFunk = new Program();
+        DataCache.DataCacheFunctions dataCacheFunctions = new DataCacheFunctions();
 
 
         public MainWindow()
@@ -149,7 +150,7 @@ namespace UserInterface
                         {
                             consumptions.Clear();
                         }
-                        DataCache.DataCacheFunctions dataCacheFunctions = new DataCacheFunctions();
+                        
                         List<List<DataAccess.Model.Consumption>> lista = dataCacheFunctions.CheckForQueries(to, end, idText.Text);
                         if (lista == null)
                         {
@@ -168,26 +169,7 @@ namespace UserInterface
                         }
                     }
                 }
-                else
-                {
-                    DataCache.DataCacheFunctions dataCacheFunctions = new DataCacheFunctions();
-                    List<List<DataAccess.Model.Consumption>> lista = dataCacheFunctions.CheckForQueries(to, end, idText.Text);
-                    if (lista == null)
-                    {
-                        noContentLabel.Content = "There are no data with this request.";
-                    }
-                    else
-                    {
-                        noContentLabel.Content = "";
-                        foreach (List<DataAccess.Model.Consumption> item in lista)
-                        {
-                            foreach (DataAccess.Model.Consumption item2 in item)
-                            {
-                                consumptions.Add(item2);
-                            }
-                        }
-                    }
-                }
+               
             }
 
 

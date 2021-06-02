@@ -13,6 +13,7 @@ namespace DataCache.Data
         private string geoArea;
         private DateTime timeSaved;
 
+
         public Query(string startDate, string endDate, string geoArea)
         {
             this.startDate = startDate;
@@ -22,10 +23,19 @@ namespace DataCache.Data
             this.timeSaved = DateTime.Now;
         }
 
+        public Query(Query q)
+        {
+            this.startDate = q.StartDate;
+            this.endDate = q.EndDate;
+            this.geoArea = q.GeoArea;
+            //this.time = new DateTime();
+            this.timeSaved = DateTime.Now;
+        }
+
         public DateTime TimeSaved
         {
             get { return timeSaved; }
-            //set { }
+            //set { TimeSaved = value; }
         }
 
         public string StartDate
@@ -38,6 +48,12 @@ namespace DataCache.Data
         {
             get { return endDate; }
             set { endDate = value; }
+        }
+
+        public string GeoArea
+        {
+            get { return geoArea; }
+            //set { }
         }
     }
 }
