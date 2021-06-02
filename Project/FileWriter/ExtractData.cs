@@ -18,13 +18,19 @@ namespace FileWriter
 
         public List<Consumption> ReadFile(string path,DateTime time)
         {
+            if(path == "" || path == null)
+            {
+                return null;
+            }
+
             List<Consumption> consumptions = new List<Consumption>();
             //path = HostingEnvironment.MapPath(path); aha ovo je da pronadje putanju
+
             FileStream stream = new FileStream(path, FileMode.Open);
             StreamReader sr = new StreamReader(stream);
             string line = "";
 
-            int i = 1;
+            int i = 0;
 
             while ((line = sr.ReadLine()) != null)
             {
@@ -33,7 +39,7 @@ namespace FileWriter
                 string var = validation.ValidateString(i, tokens);
                 if (var == "skip")
                 {
-                    i--; 
+                     
                 }
                 else if(var == "good")
                 {
@@ -55,7 +61,7 @@ namespace FileWriter
 
                 i++;
             }
-                return consumptions;
+            return consumptions;
         }
     }
 }

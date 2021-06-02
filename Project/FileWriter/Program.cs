@@ -17,7 +17,7 @@ namespace FileWriter
         public string Write(string path,string time)
         {
             string ret = "good";
-            DateTime day = validation.ValidateDate(time);
+            DateTime day = validation.ValidateDate(time);//nemam tu provjera
             List<Consumption> newDate = extract.ReadFile(path, day);
 
             if (newDate != null)
