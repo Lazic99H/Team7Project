@@ -18,8 +18,13 @@ namespace DataAccess.Model
         public Consumption(int hour, int load, string region, DateTime day)
         {
             if (region == null || day == new DateTime())
+            if(region == null )
             {
-                throw new ArgumentNullException("Argumenti ne smeju biti null");
+                throw new ArgumentNullException("Region ne smeju biti null");
+            }
+            if(day == new DateTime())
+            {
+                throw new ArgumentNullException("Region ne smeju biti null");
             }
             if (region.Trim() == "")
             {
