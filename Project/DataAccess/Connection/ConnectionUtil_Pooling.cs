@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace DataAccess.Connection
 {
+    [ExcludeFromCodeCoverage]
     public class ConnectionUtil_Pooling : IDisposable
     {
         private static IDbConnection instance = null;

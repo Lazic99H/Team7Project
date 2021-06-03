@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using DataAccess.Utils;
 
 namespace DataAccess.DAO.Implementation
 {
+    [ExcludeFromCodeCoverage]
     public class ConsumptionDAOImpl : IConsumptionDAO
     {
         public List<Consumption> Read(string reg, DateTime day)

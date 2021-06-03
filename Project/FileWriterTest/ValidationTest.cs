@@ -26,7 +26,7 @@ namespace FileWriterTest
                 {
                     validation.ValidateDate("    ");
                 });
-            Assert.Throws<NullReferenceException>(
+            Assert.Throws<ArgumentNullException>(
                 () =>
                 {
                     validation.ValidateDate(null);

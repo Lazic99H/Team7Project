@@ -62,13 +62,13 @@ namespace FileWriter
 
         public DateTime ValidateDate(string fileName)// 1."    " ,2."" ,3. null , 4. "asdasdasdasddasd" ,5. "123_123_123_123.csv"
         {
+            if (fileName == null)
+            {
+                throw new ArgumentNullException("Datum ne smije biti null"); //ovo nece nikad uci jer mora poslat nesto
+            }
             if (fileName.Trim() == "")
             {
                 throw new ArgumentException("Datum u obliku stringa mora da sadrzi karaktere");//ovo nikad nece uci jer mora posalti nesto
-            }
-            if(fileName == null)
-            {
-                throw new ArgumentNullException("Datum ne smije biti null"); //ovo nece nikad uci jer mora poslat nesto
             }
 
             string[] date = fileName.Split('_', '.');

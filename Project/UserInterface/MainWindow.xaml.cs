@@ -68,9 +68,11 @@ namespace UserInterface
                 Extract("UserInterface", startupPath, "Resources", "prog_2020_05_13.csv");
             if (!File.Exists(startupPath + "\\prog_2020_05_15.csv"))
                 Extract("UserInterface", startupPath, "Resources", "prog_2020_05_15.csv");
-
-
-            string path = System.IO.Path.GetFullPath("prog_2018_05_11.csv");
+            if (!File.Exists(startupPath + "\\prog_2020_05_16.csv"))
+                Extract("UserInterface", startupPath, "Resources", "prog_2020_05_16.csv");
+            if (!File.Exists(startupPath + "\\prog_2020_05_17.csv"))
+                Extract("UserInterface", startupPath, "Resources", "prog_2020_05_17.csv");
+        //    string path = System.IO.Path.GetFullPath("prog_2018_05_11.csv");
         }
 
         string fileLoaction = "";

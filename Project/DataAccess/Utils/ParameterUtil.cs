@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Utils
 {
+    [ExcludeFromCodeCoverage]
     public class ParameterUtil
     {
         public static void AddParameter(IDbCommand command, string name, DbType type)

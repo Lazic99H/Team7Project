@@ -3,12 +3,14 @@ using DataAccess.DAO.Implementation;
 using DataAccess.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Service
 {
+    [ExcludeFromCodeCoverage]
     public class ConsumptionService
     {
         private static readonly IConsumptionDAO consumptionDAO = new ConsumptionDAOImpl();

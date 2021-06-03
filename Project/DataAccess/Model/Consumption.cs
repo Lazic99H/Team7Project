@@ -17,6 +17,22 @@ namespace DataAccess.Model
 
         public Consumption(int hour, int load, string region, DateTime day)
         {
+            if(region == null || day == new DateTime())
+            {
+                throw new ArgumentNullException("Argumenti ne smeju biti null");
+            }
+            if(region.Trim() == "")
+            {
+                throw new ArgumentException("Region ne smije biti prazan string");
+            }
+            if (hour < 1 || hour > 24)
+            {
+                throw new ArgumentOutOfRangeException("Hour mora biti u opsegu od 1 do 24");
+            }
+            if (load < 1)
+            {
+                throw new ArgumentOutOfRangeException("load mora biti u opsegu od 1 do 24");
+            }
             Hour = hour;
             Load = load;
             Region = region;

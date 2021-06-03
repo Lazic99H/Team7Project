@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess
+namespace FileWriter
 {
     [ExcludeFromCodeCoverage]
-    class Program
+    public class Class
     {
         static void Main(string[] args)
         {
