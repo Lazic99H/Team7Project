@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="QueryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidateTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
