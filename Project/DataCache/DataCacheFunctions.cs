@@ -164,7 +164,7 @@ namespace DataCache
             {
                 return null;
             }
-            else if(retDate == days[0].ToString())
+            else if(retDate == days[0].ToString() && numOfDays != 1)
             {
                 List<List<DataAccess.Model.Consumption>> list = dict.Values.ToList();
                 return list;
@@ -178,12 +178,23 @@ namespace DataCache
                 }
                 query.EndDate = retDate;
                 Data.Data.queries.Add(query, pomocni);
+                Task t = new Task(JustSleep);
+                
+                t.Start();
 
-                Task t = new Task(Data.Data.queries.Add(query, pomocni));
                 List<List<DataAccess.Model.Consumption>> list = dict.Values.ToList();
                 return list;
             }
           
+        }
+
+        public void JustSleep()
+        {
+            //   int k = (int)Task.CurrentId;
+            //     Task.Delay(10000);
+            Thread.Sleep(10000);
+            //Thread.Sleep(10000);
+            DeleteCache();
         }
 
         /*public void Deamon()
@@ -198,16 +209,22 @@ namespace DataCache
             }
         }*/
 
-        public static void DeleteCache()
+        public void DeleteCache()
         {
-            foreach (Data.Query item in Data.Data.queries.Keys)
+            try
             {
-                DateTime start = new DateTime();
-                start = item.TimeSaved;
-                if (item.TimeSaved >= start.AddMilliseconds(30000))
+                foreach (Data.Query item in Data.Data.queries.Keys)
                 {
+                    DateTime start = item.TimeSaved;
+                    if (item.TimeSaved >= start.AddMilliseconds(5000))
+                    {
                     Data.Data.queries.Remove(item);
+                    }
                 }
+            }
+            catch
+            {
+
             }
 
             //Thread.Sleep(10800000);
