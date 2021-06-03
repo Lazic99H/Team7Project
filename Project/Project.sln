@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileSystem", "FileSystem", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileWriterTest", "FileWriterTest\FileWriterTest.csproj", "{9D971BCB-FC3F-4C23-BA4F-577835C8D269}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCacheTest", "DataCacheTest\DataCacheTest.csproj", "{6FA6A096-67A3-4980-ABCC-F027DCB1F483}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessTest", "DataAccessTest\DataAccessTest.csproj", "{C414217B-7550-450E-8140-47FFD55234C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,10 +51,10 @@ Global
 		{9D971BCB-FC3F-4C23-BA4F-577835C8D269}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D971BCB-FC3F-4C23-BA4F-577835C8D269}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D971BCB-FC3F-4C23-BA4F-577835C8D269}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6FA6A096-67A3-4980-ABCC-F027DCB1F483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FA6A096-67A3-4980-ABCC-F027DCB1F483}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6FA6A096-67A3-4980-ABCC-F027DCB1F483}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6FA6A096-67A3-4980-ABCC-F027DCB1F483}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C414217B-7550-450E-8140-47FFD55234C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C414217B-7550-450E-8140-47FFD55234C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C414217B-7550-450E-8140-47FFD55234C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C414217B-7550-450E-8140-47FFD55234C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
