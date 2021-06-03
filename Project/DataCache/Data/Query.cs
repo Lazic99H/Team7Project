@@ -16,6 +16,23 @@ namespace DataCache.Data
 
         public Query(string startDate, string endDate, string geoArea)
         {
+            if(startDate==null || endDate==null || geoArea == null)
+            {
+                throw new ArgumentNullException("Arguments can't be null.");
+            }
+            if (startDate == "")
+            {
+                throw new ArgumentException("Starting date can't be empty.");
+            }
+            if (endDate == "")
+            {
+                throw new ArgumentException("Ending date can't be empty.");
+            }
+            if (geoArea == "")
+            {
+                throw new ArgumentException("Geographical area can't be empty.");
+            }
+
             this.startDate = startDate;
             this.endDate = endDate;
             this.geoArea = geoArea;
@@ -23,14 +40,7 @@ namespace DataCache.Data
             this.timeSaved = DateTime.Now;
         }
 
-        public Query(Query q)
-        {
-            this.startDate = q.StartDate;
-            this.endDate = q.EndDate;
-            this.geoArea = q.GeoArea;
-            //this.time = new DateTime();
-            this.timeSaved = DateTime.Now;
-        }
+       
 
         public DateTime TimeSaved
         {
