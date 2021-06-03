@@ -165,8 +165,7 @@ namespace DataCache
             {
                 return null;
             }
-
-            else if(retDate == days[0].ToString() && numOfDays!=1)
+            else if(retDate == days[0].ToString())
             {
                 List<List<DataAccess.Model.Consumption>> list = dict.Values.ToList();
                 return list;
@@ -183,6 +182,8 @@ namespace DataCache
                 Task t = new Task(JustSleep);
                 
                 t.Start();
+
+                Task t = new Task(Data.Data.queries.Add(query, pomocni));
                 List<List<DataAccess.Model.Consumption>> list = dict.Values.ToList();
                 return list;
             }
