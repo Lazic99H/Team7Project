@@ -183,7 +183,6 @@ namespace DataCache
                 
                 t.Start();
 
-              //  Task t = new Task(Data.Data.queries.Add(query, pomocni));
                 List<List<DataAccess.Model.Consumption>> list = dict.Values.ToList();
                 return list;
             }
