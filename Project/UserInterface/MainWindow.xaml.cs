@@ -155,7 +155,7 @@ namespace UserInterface
                     consumptions.Clear();
                 }
 
-                List<List<DataAccess.Model.Consumption>> lista = dataCacheFunctions.CheckForQueries(startDate.Text, endDate.Text, idText.Text);
+                List<List<DataAccess.Model.Consumption>> lista = dataCacheFunctions.GetData(startDate.Text, endDate.Text, idText.Text);
                 if (lista == null)
                 {
                     noContentLabel.Content = "There are no data with this request.";
