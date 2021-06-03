@@ -178,6 +178,8 @@ namespace DataCache
                 }
                 query.EndDate = retDate;
                 Data.Data.queries.Add(query, pomocni);
+
+                Task t = new Task(Data.Data.queries.Add(query, pomocni));
                 List<List<DataAccess.Model.Consumption>> list = dict.Values.ToList();
                 return list;
             }
