@@ -5,11 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FileWriterTest
 {
+
     [TestFixture]
     public class ExtractDataTest
     {
@@ -45,7 +47,7 @@ namespace FileWriterTest
 
         [Test]
 
-        [TestCase("C:\\Users\\acopr\\OneDrive\\Документи\\GitHub\\Team7Project\\csv\\prog_2020_05_10.csv","2018-05-10")] //prazan
+        [TestCase("C:\\PerfLogs\\prog_2020_05_10.csv", "2018-05-10")] //prazan
 
         public void CheckReadFile3(string path,DateTime date)
         {
@@ -54,21 +56,22 @@ namespace FileWriterTest
         }
 
         [Test]
+        
 
-        [TestCase("C:\\Users\\acopr\\OneDrive\\Документи\\GitHub\\Team7Project\\csv\\prog_2020_05_03.csv", "2018-05-03")]//dobar
 
-        public void CheckReadFile4(string path, DateTime date)
+        public void CheckReadFile4()
         {
 
             ExtractData extractData = new ExtractData();
-            Assert.IsNotNull(extractData.ReadFile(path, date));
+            DateTime time = new DateTime(2020, 5, 15);
+            Assert.IsNotNull(extractData.ReadFile("C:\\Users\\acopr\\OneDrive\\Документи\\GitHub\\Team7Project\\Project\\UserInterface\\bin\\Debug\\prog_2020_05_15.csv", time));
         }
 
         [Test]
 
-        [TestCase("C:\\Users\\acopr\\OneDrive\\Документи\\GitHub\\Team7Project\\csv\\prog_2018_05_11.csv", "2018-05-11")] //fali sat
-        [TestCase("C:\\Users\\acopr\\OneDrive\\Документи\\GitHub\\Team7Project\\csv\\prog_2020_05_12.csv", "2020-05-12")] //ima 23 sata 
-        [TestCase("C:\\Users\\acopr\\OneDrive\\Документи\\GitHub\\Team7Project\\csv\\prog_2020_05_13.csv", "2020-05-13")] //umjesto broja sata je rijec
+        [TestCase("C:\\PerfLogs\\prog_2018_05_11.csv", "2018-05-11")] //fali sat
+        [TestCase("C:\\PerfLogs\\prog_2020_05_12.csv", "2020-05-12")] //ima 23 sata 
+        [TestCase("C:\\PerfLogs\\prog_2020_05_13.csv", "2020-05-13")] //umjesto broja sata je rijec
 
         public void CheckReadFile5(string path, DateTime date)
         {

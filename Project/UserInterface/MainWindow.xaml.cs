@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DataCache;
+using System.Reflection;
 
 namespace UserInterface
 {
@@ -30,6 +31,7 @@ namespace UserInterface
         {
             get; set;
         }
+
 
         public static int counter = 0;
 
@@ -54,10 +56,36 @@ namespace UserInterface
             }
             InitializeComponent();
             DataContext = this;//cuvena linija koda
-            
+            string startupPath = System.IO.Directory.GetCurrentDirectory();
+            if (!File.Exists(startupPath + "\\prog_2018_05_11.csv"))
+                Extract("UserInterface", startupPath, "Resources", "prog_2018_05_11.csv");
+            if (!File.Exists(startupPath + "\\prog_2020_05_10.csv"))
+                Extract("UserInterface", startupPath, "Resources", "prog_2020_05_10.csv");
+            if (!File.Exists(startupPath + "\\prog_2020_05_12.csv"))
+                Extract("UserInterface", startupPath, "Resources", "prog_2020_05_12.csv");
+            if (!File.Exists(startupPath + "\\prog_2020_05_13.csv"))
+                Extract("UserInterface", startupPath, "Resources", "prog_2020_05_13.csv");
+            if (!File.Exists(startupPath + "\\prog_2020_05_15.csv"))
+                Extract("UserInterface", startupPath, "Resources", "prog_2020_05_15.csv");
+
+
+            string path = System.IO.Path.GetFullPath("prog_2018_05_11.csv");
         }
 
         string fileLoaction = "";
+
+        public static void Extract(string nameSpace, string outDirectory, string internalFilePath, string resourceName)
+        {
+            Assembly assembly = Assembly.GetCallingAssembly();
+
+            using (Stream s = assembly.GetManifestResourceStream(nameSpace + "." + (internalFilePath == "" ? "" : internalFilePath + ".") + resourceName))
+                using (BinaryReader r = new BinaryReader(s))
+                    using (FileStream fs = new FileStream(outDirectory + "\\" + resourceName, FileMode.OpenOrCreate))
+                        using (BinaryWriter w = new BinaryWriter(fs))
+                            w.Write(r.ReadBytes((int)s.Length));
+
+        }
+
 
         private void Button_Click_Browser(object sender, RoutedEventArgs e)
         {
