@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using DataAccess;
+using DataAccess.DAO;
 
 namespace DataCache
 {
@@ -34,7 +35,7 @@ namespace DataCache
             return n;
         }
 
-        public List<List<DataAccess.Model.Consumption>> CheckForQueries(string startDate, string endDate, string geoArea)
+        public List<List<DataAccess.Model.IConsumption>> CheckForQueries(string startDate, string endDate, string geoArea, Data.IData data)
         {
             Data.Query query = new Data.Query(startDate, endDate, geoArea);
 
@@ -43,15 +44,15 @@ namespace DataCache
             int n = GetN(startDate, endDate);
 
             bool found = false;
-            foreach (Data.Query item in Data.Data.queries.Keys)
+            foreach (Data.Query item in data.queries.Keys)
             {
-                List<List<DataAccess.Model.Consumption>> listToRet = new List<List<DataAccess.Model.Consumption>>();
+                List<List<DataAccess.Model.IConsumption>> listToRet = new List<List<DataAccess.Model.IConsumption>>();
                 if (DateTime.Compare(DateTime.Parse(item.StartDate), DateTime.Parse(startDate)) <= 0 && DateTime.Compare(DateTime.Parse(item.EndDate), DateTime.Parse(endDate)) >= 0)
                 {
                     found = true;
                     for (int i = 0; i < n; i++)
                     {
-                        listToRet.Add(Data.Data.queries[item][DateTime.Parse(startDate).AddDays(i)]);
+                        listToRet.Add(data.queries[item][DateTime.Parse(startDate).AddDays(i)]);
                     }
                     return listToRet;
                 }
@@ -66,10 +67,10 @@ namespace DataCache
             return null;
         }
 
-        public List<List<DataAccess.Model.Consumption>> GetData(string startDate, string endDate, string geoArea)
+        public List<List<DataAccess.Model.IConsumption>> GetData(string startDate, string endDate, string geoArea, IConsumptionDAO consumptionDAO, Data.IData data)
         {
-            List<List<DataAccess.Model.Consumption>> listRet = new List<List<DataAccess.Model.Consumption>>();
-            listRet = CheckForQueries(startDate, endDate, geoArea);
+            List<List<DataAccess.Model.IConsumption>> listRet = new List<List<DataAccess.Model.IConsumption>>();
+            listRet = CheckForQueries(startDate, endDate, geoArea, data);
 
             if (listRet == null)
             {
@@ -90,7 +91,7 @@ namespace DataCache
                 {
                     days.Add(dayToAdd.AddDays(i));
                 }
-                List<List<DataAccess.Model.Consumption>> retList = ReadFromDataBase(geoArea, days, new Data.Query(startDate, endDate, geoArea), n);
+                List<List<DataAccess.Model.IConsumption>> retList = ReadFromDataBase(geoArea, days, new Data.Query(startDate, endDate, geoArea), n, consumptionDAO, data);
                 return retList;
             }
             else
@@ -106,12 +107,12 @@ namespace DataCache
             Data.Data.queries[query] = consumptions;
         }*/
 
-        public List<List<DataAccess.Model.Consumption>> ReadFromDataBase(string geoArea, List<DateTime> days, Data.Query query, int numOfDays)
+        public List<List<DataAccess.Model.IConsumption>> ReadFromDataBase(string geoArea, List<DateTime> days, Data.Query query, int numOfDays, IConsumptionDAO consumptionDAO, Data.IData data)
         {
-            Dictionary<DateTime, List<DataAccess.Model.Consumption>> dict = new Dictionary<DateTime, List<DataAccess.Model.Consumption>>();
-            Dictionary<DateTime, List<DataAccess.Model.Consumption>> pomocni = new Dictionary<DateTime, List<DataAccess.Model.Consumption>>();
+            Dictionary<DateTime, List<DataAccess.Model.IConsumption>> dict = new Dictionary<DateTime, List<DataAccess.Model.IConsumption>>();
+            Dictionary<DateTime, List<DataAccess.Model.IConsumption>> pomocni = new Dictionary<DateTime, List<DataAccess.Model.IConsumption>>();
 
-            dict = cs.Read(geoArea, days);
+            dict = consumptionDAO.Read(geoArea, days);
             bool isInBase = false;
             string retDate="";
 
@@ -165,9 +166,9 @@ namespace DataCache
             {
                 return null;
             }
-            else if(retDate == days[0].ToString())
+            else if(retDate == days[0].ToString() && numOfDays!=1)
             {
-                List<List<DataAccess.Model.Consumption>> list = dict.Values.ToList();
+                List<List<DataAccess.Model.IConsumption>> list = dict.Values.ToList();
                 return list;
             }
             else
@@ -178,32 +179,40 @@ namespace DataCache
                     retDate = strings[0];
                 }
                 query.EndDate = retDate;
-                Data.Data.queries.Add(query, pomocni);
-                Task t = new Task(JustSleep);
-                
-                t.Start();
+                data.queries.Add(query, pomocni);
+                //Task t = new Task(JustSleep);
+                //Thread t = new Thread(new ParameterizedThreadStart(JustSleep));
+                //t.Start(data);
+                StartTheThread(data);
 
-                List<List<DataAccess.Model.Consumption>> list = dict.Values.ToList();
+                List<List<DataAccess.Model.IConsumption>> list = dict.Values.ToList();
                 return list;
             }
           
         }
 
-        public void JustSleep()
+        public Thread StartTheThread(Data.IData data)
+        {
+            var t = new Thread(() => JustSleep(data));
+            t.Start();
+            return t;
+        }
+
+        public void JustSleep(Data.IData data)
         {
             //   int k = (int)Task.CurrentId;
             //     Task.Delay(10000);
             //Thread.Sleep(10800000);
             Thread.Sleep(10000);
-            DeleteCache();
+            DeleteCache(data);
         }
 
-        public void DeleteCache()
+        public void DeleteCache(Data.IData data)
         {
             mutex.WaitOne();
             try
             {
-                foreach (Data.Query item in Data.Data.queries.Keys)
+                foreach (Data.Query item in data.queries.Keys)
                 {
                     DateTime start = item.TimeSaved.AddMilliseconds(5000);
                     string vreme = start.Subtract(item.TimeSaved).ToString();
@@ -212,7 +221,7 @@ namespace DataCache
 
                     if (i >= 5 )
                     {
-                    Data.Data.queries.Remove(item);
+                    data.queries.Remove(item);
                     }
                 }
             }

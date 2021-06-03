@@ -21,17 +21,17 @@ namespace DataAccess.Service
             return consumptionDAO.FindAllCountrys();
         }
 
-        public List<Consumption> ReadDay(string reg, DateTime day)//za jedan dan null ako nema, lista ako ima
+        public List<IConsumption> ReadDay(string reg, DateTime day)//za jedan dan null ako nema, lista ako ima
         {
             return consumptionDAO.Read(reg, day);
         }
 
-        public Dictionary<DateTime, List<Consumption>> Read(string reg, List<DateTime> days)//vraca null ako nema trazenih potrosnjih za odabrani opseg ili dictinary ako ima..
+        public Dictionary<DateTime, List<IConsumption>> Read(string reg, List<DateTime> days)//vraca null ako nema trazenih potrosnjih za odabrani opseg ili dictinary ako ima..
         {
             return consumptionDAO.Read(reg, days);
         }
 
-        public bool Write(List<Consumption> newDate)//vraca true ako je upisano dobro ili false ako nije
+        public bool Write(List<IConsumption> newDate)//vraca true ako je upisano dobro ili false ako nije
         {
             if (consumptionDAO.Write(newDate))
                 return true;

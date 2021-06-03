@@ -14,10 +14,10 @@ namespace DataAccess.DAO.Implementation
     [ExcludeFromCodeCoverage]
     public class ConsumptionDAOImpl : IConsumptionDAO
     {
-        public List<Consumption> Read(string reg, DateTime day)
+        public List<IConsumption> Read(string reg, DateTime day)
         {
             string query = "select * from databasetable where regija = :regija and datum = :datum"; // upit za search
-            List<Consumption> searchedItems = new List<Consumption>();
+            List<IConsumption> searchedItems = new List<IConsumption>();
 
 
             using (IDbConnection connection = ConnectionUtil_Pooling.GetConnection())
@@ -38,7 +38,7 @@ namespace DataAccess.DAO.Implementation
                     {
                         while (reader.Read())
                         {
-                            Consumption oneConsumption = new Consumption(reader.GetInt32(0), reader.GetInt32(1),
+                            IConsumption oneConsumption = new Consumption(reader.GetInt32(0), reader.GetInt32(1),
                                 reader.GetString(2), reader.GetDateTime(3));
                             searchedItems.Add(oneConsumption);
                         }
@@ -51,13 +51,13 @@ namespace DataAccess.DAO.Implementation
             return searchedItems;
         }
 
-        public Dictionary<DateTime, List<Consumption>> Read(string reg, List<DateTime> days)
+        public Dictionary<DateTime, List<IConsumption>> Read(string reg, List<DateTime> days)
         {
-            Dictionary<DateTime, List<Consumption>> wantedData = new Dictionary<DateTime, List<Consumption>>();
+            Dictionary<DateTime, List<IConsumption>> wantedData = new Dictionary<DateTime, List<IConsumption>>();
 
             foreach(var day in days)
             {
-                List<Consumption> oneDayConsumption = new List<Consumption>();
+                List<IConsumption> oneDayConsumption = new List<IConsumption>();
                 oneDayConsumption = Read(reg, day);
 
                 if(oneDayConsumption == null)//ako je razlicito oda 24 cao papi
@@ -95,7 +95,7 @@ namespace DataAccess.DAO.Implementation
             }
         }
 
-        public bool Write(List<Consumption> newData)
+        public bool Write(List<IConsumption> newData)
         {
             bool ret = false;
             if (Read(newData[0].Region, newData[0].Day) != null)
@@ -121,7 +121,7 @@ namespace DataAccess.DAO.Implementation
         }
         
 
-        public bool Write(Consumption newData, IDbConnection connection)
+        public bool Write(IConsumption newData, IDbConnection connection)
         {
             bool ret = false;
             string insert = "insert into databasetable (br,potrosnja,regija,datum) values (:br,:potrosnja,:regija,:datum)"; 

@@ -16,7 +16,7 @@ namespace FileWriter
         public static Validation validation = new Validation();
         private static ConsumptionService consumptionService = new ConsumptionService();
 
-        public List<Consumption> ReadFile(string path,DateTime time)
+        public List<IConsumption> ReadFile(string path,DateTime time)
         {
             if(path == null || path.Trim() == "")
             {
@@ -27,7 +27,7 @@ namespace FileWriter
             {
                 return null;
             }
-            List<Consumption> consumptions = new List<Consumption>();
+            List<IConsumption> consumptions = new List<IConsumption>();
             //path = HostingEnvironment.MapPath(path); aha ovo je da pronadje putanju
 
             FileStream stream = new FileStream(path, FileMode.Open);

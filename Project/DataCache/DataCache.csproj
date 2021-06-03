@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DataCacheFunctions.cs" />
     <Compile Include="Data\Data.cs" />
+    <Compile Include="Data\IData.cs" />
     <Compile Include="Data\Query.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

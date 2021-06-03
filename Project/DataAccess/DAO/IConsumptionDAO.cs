@@ -11,13 +11,13 @@ namespace DataAccess.DAO
 {
     public interface IConsumptionDAO
     {
-        Dictionary<DateTime, List<Consumption>> Read(string reg, List<DateTime> days);
+        Dictionary<DateTime, List<IConsumption>> Read(string reg, List<DateTime> days);
 
-        List<Consumption> Read(string reg, DateTime day);
+        List<IConsumption> Read(string reg, DateTime day);
 
         List<string> FindAllCountrys();
 
-        bool Write(List<Consumption> newData);
+        bool Write(List<IConsumption> newData);
 
         void SaveError(string message);
     }

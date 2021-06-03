@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Model
 {
-    public class Consumption
+    public class Consumption : IConsumption
     {
         public int Hour { get; set; }
         public int Load { get; set; }
@@ -17,11 +17,11 @@ namespace DataAccess.Model
 
         public Consumption(int hour, int load, string region, DateTime day)
         {
-            if(region == null || day == new DateTime())
+            if (region == null || day == new DateTime())
             {
                 throw new ArgumentNullException("Argumenti ne smeju biti null");
             }
-            if(region.Trim() == "")
+            if (region.Trim() == "")
             {
                 throw new ArgumentException("Region ne smije biti prazan string");
             }
@@ -38,5 +38,6 @@ namespace DataAccess.Model
             Region = region;
             Day = day;
         }
-    }
+    
+}
 }

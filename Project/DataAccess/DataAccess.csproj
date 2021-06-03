@@ -69,6 +69,7 @@
     <Compile Include="DAO\IConsumptionDAO.cs" />
     <Compile Include="DAO\Implementation\ConsumptionDAOImpl.cs" />
     <Compile Include="Model\Consumption.cs" />
+    <Compile Include="Model\IConsumption.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ConsumptionService.cs" />

@@ -19,6 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DataCache;
 using System.Reflection;
+using System.Runtime.Remoting.Contexts;
 
 namespace UserInterface
 {
@@ -27,7 +28,7 @@ namespace UserInterface
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static BindingList<Consumption> consumptions
+        public static BindingList<IConsumption> consumptions
         {
             get; set;
         }
@@ -44,12 +45,15 @@ namespace UserInterface
         //public static DataCache.Program = new DataCache.Program();
         public static DataCache.DataCacheFunctions dataCacheFunctions = new DataCacheFunctions();
         public static DataCache.Validate validate = new Validate();
+        public DataAccess.DAO.IConsumptionDAO consumptionDAO = new DataAccess.DAO.Implementation.ConsumptionDAOImpl();
+        public DataCache.Data.IData data = new DataCache.Data.Data();
+        //public DataCache.Data.Data dataa = new DataCache.Data.Data();
 
 
 
         public MainWindow()
         {
-            consumptions = new BindingList<Consumption>();
+            consumptions = new BindingList<IConsumption>();
             Countrys = new BindingList<string>();
             Countrys.Clear();
             foreach (var temp in writeFunk.ReadAllCountrys())
@@ -158,7 +162,7 @@ namespace UserInterface
                     consumptions.Clear();
                 }
 
-                List<List<DataAccess.Model.Consumption>> lista = dataCacheFunctions.GetData(startDate.Text, endDate.Text, idText.Text);
+                List<List<DataAccess.Model.IConsumption>> lista = dataCacheFunctions.GetData(startDate.Text, endDate.Text, idText.Text, consumptionDAO, data);
                 if (lista == null)
                 {
                     noContentLabel.Content = "There are no data with this request.";
@@ -166,9 +170,9 @@ namespace UserInterface
                 else
                 {
                     noContentLabel.Content = "";
-                    foreach (List<DataAccess.Model.Consumption> item in lista)
+                    foreach (List<DataAccess.Model.IConsumption> item in lista)
                     {
-                        foreach (DataAccess.Model.Consumption item2 in item)
+                        foreach (DataAccess.Model.IConsumption item2 in item)
                         {
                             consumptions.Add(item2);
                         }
