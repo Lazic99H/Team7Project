@@ -5,11 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FileWriterTest
 {
+
     [TestFixture]
     public class ExtractDataTest
     {
@@ -43,37 +45,47 @@ namespace FileWriterTest
                     });
         }
 
+
+
         [Test]
 
-        [TestCase("C:\\Users\\acopr\\OneDrive\\Документи\\GitHub\\Team7Project\\csv\\prog_2020_05_10.csv","2018-05-10")] //prazan
-
-        public void CheckReadFile3(string path,DateTime date)
+        public void CheckReadFile3()
         {
             ExtractData extractData = new ExtractData();
-            Assert.AreEqual(null, extractData.ReadFile(path, date));
+            DateTime time = new DateTime(2020, 5, 10);
+            string startupPath = System.IO.Directory.GetCurrentDirectory();
+            string endPath =startupPath.Replace("FileWriterTest", "UserInterface");
+            Assert.AreEqual(null, extractData.ReadFile(endPath + "\\prog_2020_05_10.csv", time));//prazan
         }
 
         [Test]
+        
 
-        [TestCase("C:\\Users\\acopr\\OneDrive\\Документи\\GitHub\\Team7Project\\csv\\prog_2020_05_03.csv", "2018-05-03")]//dobar
 
-        public void CheckReadFile4(string path, DateTime date)
+        public void CheckReadFile4()
         {
 
             ExtractData extractData = new ExtractData();
-            Assert.IsNotNull(extractData.ReadFile(path, date));
+            DateTime time = new DateTime(2020, 5, 15);
+            string startupPath = System.IO.Directory.GetCurrentDirectory();
+            string endPath =startupPath.Replace("FileWriterTest", "UserInterface");
+            Assert.IsNotNull(extractData.ReadFile(endPath + "\\prog_2020_05_15.csv", time));
         }
 
-        [Test]
-
-        [TestCase("C:\\Users\\acopr\\OneDrive\\Документи\\GitHub\\Team7Project\\csv\\prog_2018_05_11.csv", "2018-05-11")] //fali sat
-        [TestCase("C:\\Users\\acopr\\OneDrive\\Документи\\GitHub\\Team7Project\\csv\\prog_2020_05_12.csv", "2020-05-12")] //ima 23 sata 
-        [TestCase("C:\\Users\\acopr\\OneDrive\\Документи\\GitHub\\Team7Project\\csv\\prog_2020_05_13.csv", "2020-05-13")] //umjesto broja sata je rijec
-
-        public void CheckReadFile5(string path, DateTime date)
+        [Test]     
+      
+        public void CheckReadFile5()
         {
             ExtractData extractData = new ExtractData();
-            Assert.AreEqual(null, extractData.ReadFile(path, date));
+            string startupPath = System.IO.Directory.GetCurrentDirectory();
+            string endPath = startupPath.Replace("FileWriterTest", "UserInterface");
+            DateTime time1 = new DateTime(2018, 5, 11);
+            Assert.AreEqual(null, extractData.ReadFile(endPath + "\\prog_2018_05_11.csv", time1)); //fali sat
+            DateTime time2 = new DateTime(2020, 5, 12);
+            Assert.AreEqual(null, extractData.ReadFile(endPath + "\\prog_2020_05_12.csv", time2)); //ima 23 sata 
+            DateTime time3 = new DateTime(2020, 5, 13);
+            Assert.AreEqual(null, extractData.ReadFile(endPath + "\\prog_2020_05_13.csv", time3)); //umjesto broja sata je rijec
+
         }
 
     }
