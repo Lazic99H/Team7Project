@@ -11,6 +11,7 @@ namespace DataCache
     public class DataCacheFunctions
     {
         private static DataAccess.Service.ConsumptionService cs = new DataAccess.Service.ConsumptionService();
+        private static Mutex mutex = new Mutex();
 
         public int GetN(string startDate, string endDate)
         {
@@ -192,31 +193,24 @@ namespace DataCache
         {
             //   int k = (int)Task.CurrentId;
             //     Task.Delay(10000);
+            //Thread.Sleep(10800000);
             Thread.Sleep(10000);
-            //Thread.Sleep(10000);
             DeleteCache();
         }
 
-        /*public void Deamon()
-        {
-            while (true)
-            {
-                /*Task.Run(() => { DataCacheFunctions.DeleteCache();});
-                Thread.Sleep(10800000);
-                Thread tesThread = new Thread(DataCacheFunctions.DeleteCache);
-                tesThread.IsBackground = true;
-                tesThread.Start();
-            }
-        }*/
-
         public void DeleteCache()
         {
+            mutex.WaitOne();
             try
             {
                 foreach (Data.Query item in Data.Data.queries.Keys)
                 {
-                    DateTime start = item.TimeSaved;
-                    if (item.TimeSaved >= start.AddMilliseconds(5000))
+                    DateTime start = item.TimeSaved.AddMilliseconds(5000);
+                    string vreme = start.Subtract(item.TimeSaved).ToString();
+                    string[] sati = vreme.Split(':');
+                    int i = int.Parse(sati[2]);
+
+                    if (i >= 5 )
                     {
                     Data.Data.queries.Remove(item);
                     }
@@ -226,28 +220,10 @@ namespace DataCache
             {
 
             }
+            mutex.ReleaseMutex();
 
             //Thread.Sleep(10800000);
             //Thread.Sleep(60000);
-
-            /*using (TaskService ts = new TaskService())
-            {
-                // Create a new task definition and assign properties
-                TaskDefinition td = ts.NewTask();
-                td.RegistrationInfo.Description = "Does something";
-
-                // Create a trigger that will fire the task at this time every other day
-                td.Triggers.Add(new DailyTrigger { DaysInterval = 2 });
-
-                // Create an action that will launch Notepad whenever the trigger fires
-                td.Actions.Add(new ExecAction("notepad.exe", "c:\\test.log", null));
-
-                // Register the task in the root folder
-                ts.RootFolder.RegisterTaskDefinition(@"Test", td);
-
-                // Remove the task we just created
-                ts.RootFolder.DeleteTask("Test");
-            }*/
         }
     }
 }
