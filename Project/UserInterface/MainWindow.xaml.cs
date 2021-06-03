@@ -51,6 +51,7 @@ namespace UserInterface
         {
             consumptions = new BindingList<Consumption>();
             Countrys = new BindingList<string>();
+            Countrys.Clear();
             foreach (var temp in writeFunk.ReadAllCountrys())
             {
                 Countrys.Add(temp);
@@ -128,7 +129,7 @@ namespace UserInterface
                 }
                 else if (check == "good")
                 {
-                    Countrys = new BindingList<string>();
+                    Countrys.Clear();
                     foreach (var temp in writeFunk.ReadAllCountrys())
                     {
                         Countrys.Add(temp);

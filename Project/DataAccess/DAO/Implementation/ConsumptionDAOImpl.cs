@@ -103,8 +103,7 @@ namespace DataAccess.DAO.Implementation
                 SaveError("Date for that region and date already exist");
                 return ret;
             }
-
-             // u find country ce dodati     
+            
             
             using (IDbConnection connection = ConnectionUtil_Pooling.GetConnection())
             {
