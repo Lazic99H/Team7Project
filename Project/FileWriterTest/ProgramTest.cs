@@ -20,7 +20,6 @@ namespace FileWriterTest
         IConsumptionDAO consumptionDAOReadTrue;
         IConsumptionDAO consumptionDAOReadFalse;
 
-        //      IConsumptionDAO 
         [SetUp]
         public void SetUp()
         {
@@ -29,12 +28,12 @@ namespace FileWriterTest
             List.Add(consumption);
 
             var moq = new Mock<IConsumptionDAO>();
-            moq.Setup(t => t.Write(It.IsAny<List<IConsumption>>())).Returns(false);//ova lista me zeza
+            moq.Setup(t => t.Write(It.IsAny<List<IConsumption>>())).Returns(false);
             consumptionDAOFalse = moq.Object;
 
 
             var moq2 = new Mock<IConsumptionDAO>();
-            moq2.Setup(t => t.Write(It.IsAny<List<IConsumption>>())).Returns(true);//ova lista me jebe
+            moq2.Setup(t => t.Write(It.IsAny<List<IConsumption>>())).Returns(true);
             consumptionDAOTrue = moq2.Object;
 
             var moq3 = new Mock<IConsumptionDAO>();
