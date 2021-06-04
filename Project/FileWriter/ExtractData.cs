@@ -1,4 +1,5 @@
-﻿using DataAccess.Model;
+﻿using DataAccess.DAO;
+using DataAccess.Model;
 using DataAccess.Service;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace FileWriter
     public class ExtractData
     {
         public static Validation validation = new Validation();
-        private static ConsumptionService consumptionService = new ConsumptionService();
+       // private static ConsumptionService consumptionService = new ConsumptionService();//i ovo mjenjat
 
-        public List<IConsumption> ReadFile(string path,DateTime time)
+        public List<IConsumption> ReadFile(string path,DateTime time, IConsumptionDAO consumptionDAO)
         {
             if(path == null || path.Trim() == "")
             {
@@ -52,7 +53,7 @@ namespace FileWriter
                 }
                 else if (var == "hourMissing")
                 {
-                    consumptionService.SaveError("Hour is missing");
+                    consumptionDAO.SaveError("Hour is missing");
                     consumptions = null;
                     return consumptions;
                 }

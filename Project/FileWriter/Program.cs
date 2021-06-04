@@ -1,4 +1,5 @@
-﻿using DataAccess.Model;
+﻿using DataAccess.DAO;
+using DataAccess.Model;
 using DataAccess.Service;
 using System;
 using System.Collections.Generic;
@@ -10,19 +11,18 @@ namespace FileWriter
 {
     public class Program
     {
-        private static readonly ConsumptionService consumptionService = new ConsumptionService();
         private static ExtractData extract = new ExtractData();
         private static Validation validation = new Validation();
 
-        public string Write(string path,string time)
+        public string Write(string path,string time,IConsumptionDAO consumptionDAO)
         {
             string ret = "good";
             DateTime day = validation.ValidateDate(time);//nemam tu provjera
-            List<IConsumption> newDate = extract.ReadFile(path, day);
+            List<IConsumption> newDate = extract.ReadFile(path, day, consumptionDAO);
 
             if (newDate != null)
             {
-                if (!consumptionService.Write(newDate))
+                if (!consumptionDAO.Write(newDate))
                     ret = "dateExists";
             }
             else
@@ -33,9 +33,9 @@ namespace FileWriter
             return ret;
         }
 
-        public List<string> ReadAllCountrys()
+        public List<string> ReadAllCountrys(IConsumptionDAO consumptionDAO)
         {
-            return consumptionService.FindAllCountrys();
+            return consumptionDAO.FindAllCountrys();
         }      
     }
 }

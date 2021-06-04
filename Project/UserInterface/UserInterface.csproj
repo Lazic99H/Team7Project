@@ -99,6 +99,7 @@
     <EmbeddedResource Include="Resources\prog_2020_05_15.csv" />
     <EmbeddedResource Include="Resources\prog_2020_05_16.csv" />
     <EmbeddedResource Include="Resources\prog_2020_05_17.csv" />
+    <EmbeddedResource Include="Resources\prog_2020_05_18.csv" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

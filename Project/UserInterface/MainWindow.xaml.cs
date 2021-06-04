@@ -20,6 +20,8 @@ using System.Windows.Shapes;
 using DataCache;
 using System.Reflection;
 using System.Runtime.Remoting.Contexts;
+using DataAccess.DAO;
+using DataAccess.DAO.Implementation;
 
 namespace UserInterface
 {
@@ -55,8 +57,9 @@ namespace UserInterface
         {
             consumptions = new BindingList<IConsumption>();
             Countrys = new BindingList<string>();
-            Countrys.Clear();
-            foreach (var temp in writeFunk.ReadAllCountrys())
+            //Countrys.Clear();
+            IConsumptionDAO consumptionDAO = new ConsumptionDAOImpl();
+            foreach (var temp in writeFunk.ReadAllCountrys(consumptionDAO))
             {
                 Countrys.Add(temp);
             }
@@ -77,7 +80,9 @@ namespace UserInterface
                 Extract("UserInterface", startupPath, "Resources", "prog_2020_05_16.csv");
             if (!File.Exists(startupPath + "\\prog_2020_05_17.csv"))
                 Extract("UserInterface", startupPath, "Resources", "prog_2020_05_17.csv");
-        //    string path = System.IO.Path.GetFullPath("prog_2018_05_11.csv");
+            if (!File.Exists(startupPath + "\\prog_2020_05_18.csv"))
+                Extract("UserInterface", startupPath, "Resources", "prog_2020_05_18.csv");
+            //    string path = System.IO.Path.GetFullPath("prog_2018_05_11.csv");
         }
 
         string fileLoaction = "";
@@ -125,8 +130,8 @@ namespace UserInterface
             }
             else
             {
-
-                string check = writeFunk.Write(fileLoaction, csvFileName.Text);
+                IConsumptionDAO consumptionDAO = new ConsumptionDAOImpl();
+                string check = writeFunk.Write(fileLoaction, csvFileName.Text, consumptionDAO);
                 if (check == "dateExists")
                 {
                     System.Windows.Forms.MessageBox.Show("Date already exists for that day and region!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -134,7 +139,7 @@ namespace UserInterface
                 else if (check == "good")
                 {
                     Countrys.Clear();
-                    foreach (var temp in writeFunk.ReadAllCountrys())
+                    foreach (var temp in writeFunk.ReadAllCountrys(consumptionDAO))
                     {
                         Countrys.Add(temp);
                     }
