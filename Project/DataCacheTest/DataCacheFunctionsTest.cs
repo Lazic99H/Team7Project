@@ -340,16 +340,16 @@ namespace DataCacheTest
             {
                 for (int j = 1; j <= 24; j++)
                 {
-                    Consumption consumption = new Consumption(i, 1234 + (i * 10), "RUS", DateTime.Parse("6/" + i + "/2020"));
+                    Consumption consumption = new Consumption(i, 1234 + (i * 10), "RUS", DateTime.Parse("6/" + i + "/2021"));
                     consumptions.Add(consumption);
                 }
-                dict.Add(DateTime.Parse("6/" + i + "/2020"), consumptions);
+                dict.Add(DateTime.Parse("6/" + i + "/2021"), consumptions);
                 con.Add(consumptions);
                 consumptions.Clear();
             }
 
             Query q = new Query(startDate, endDate, geoArea);
-            querys.Add(q, dict);
+            //querys.Add(q, dict);
 
             List<DateTime> days = new List<DateTime>();
             days.Add(DateTime.Parse("6/3/2021"));
