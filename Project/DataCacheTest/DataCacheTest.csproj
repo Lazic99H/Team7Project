@@ -66,6 +66,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <Project>{dcaf0e1d-84e8-40d1-9e51-5942092318e3}</Project>
+      <Name>DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataCache\DataCache.csproj">
       <Project>{5b474dc9-4d9d-4e10-b7ca-469a49a524d1}</Project>
       <Name>DataCache</Name>

@@ -9,7 +9,7 @@ using DataAccess.DAO;
 
 namespace DataCache
 {
-    public class DataCacheFunctions
+    public class DataCacheFunctions : IDataCacheFunctions
     {
         private static DataAccess.Service.ConsumptionService cs = new DataAccess.Service.ConsumptionService();
         private static Mutex mutex = new Mutex();
